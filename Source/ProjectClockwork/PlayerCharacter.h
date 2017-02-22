@@ -30,10 +30,16 @@ public:
 	void move(float DeltaTime);
 	
 	FVector movement = { 0, 0, 0 };
+	FVector targetMovement = { 0, 0, 0 };
 
 	float xIn = 0;
 	float yIn = 0;
 
 	UPROPERTY(EditAnywhere)
 		float speed = 1;
+
+	UPROPERTY(EditAnywhere)
+		float acelleration = 1;
+
+	
 };

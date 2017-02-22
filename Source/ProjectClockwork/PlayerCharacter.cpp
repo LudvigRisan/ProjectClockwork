@@ -17,8 +17,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	InputComponent->BindAxis("MoveX", this, &APlayerCharacter::xInput);
-	InputComponent->BindAxis("MoveY", this, &APlayerCharacter::yInput);
+	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 }
 
 // Called every frame
@@ -27,13 +26,21 @@ void APlayerCharacter::Tick( float DeltaTime )
 	Super::Tick( DeltaTime );
 
 	APlayerCharacter::move(DeltaTime);
+
+	
 }
 
 // Called to bind functionality to input
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+	UE_LOG(LogTemp, Warning, TEXT("SetupInput"));
+
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	
+
+	InputComponent->BindAxis("InputX", this, &APlayerCharacter::xInput);
+	InputComponent->BindAxis("InputY", this, &APlayerCharacter::yInput);
 }
 
 void APlayerCharacter::xInput(float axis) {
@@ -46,9 +53,11 @@ void APlayerCharacter::yInput(float axis) {
 
 void APlayerCharacter::move(float DeltaTime) {
 
-	movement = { xIn * speed, yIn * speed, 0 };
+	targetMovement = { xIn, yIn, 0 };
+	targetMovement.Normalize();
+	
+	movement = {FMath::Lerp(movement.X, targetMovement.X, acelleration * DeltaTime), FMath::Lerp(movement.Y, targetMovement.Y, acelleration * DeltaTime), 0};
+	
 
-	UE_LOG(LogTemp, Warning, TEXT("xIn: %f"), this->xIn);
-
-	AddMovementInput(movement, DeltaTime);
+	AddMovementInput(movement, DeltaTime * speed);
 }

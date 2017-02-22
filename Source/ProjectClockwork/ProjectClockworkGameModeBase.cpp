@@ -4,8 +4,8 @@
 #include "ProjectClockworkGameModeBase.h"
 
 
-APlayerController* MyController = GetWorld()->GetFirstPlayerController();
+/*APlayerController* MyController = GetWorld()->GetFirstPlayerController();
 
 MyController->bShowMouseCursor = true;
-MyController->bEnableClickEvents = true;
+MyController->bEnableClickEvents = true;*/
 
