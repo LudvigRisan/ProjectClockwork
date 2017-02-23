@@ -4,8 +4,16 @@
 #include "ProjectClockworkGameModeBase.h"
 
 
-/*APlayerController* MyController = GetWorld()->GetFirstPlayerController();
+AProjectClockworkGameModeBase::AProjectClockworkGameModeBase() {
+	/*APlayerController* MyController = GetWorld()->GetFirstPlayerController();
 
-MyController->bShowMouseCursor = true;
-MyController->bEnableClickEvents = true;*/
+	if (MyController) {
+		MyController->bShowMouseCursor = true;
+		MyController->bEnableClickEvents = true;
+	} else {
+
+		UE_LOG(LogTemp, Warning, TEXT("Missing playercontroller"));
+
+	}*/
+}
 

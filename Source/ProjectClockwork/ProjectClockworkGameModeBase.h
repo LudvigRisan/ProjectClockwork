@@ -13,7 +13,9 @@ class PROJECTCLOCKWORK_API AProjectClockworkGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
-	
+public:
+	AProjectClockworkGameModeBase();
+
 	
 	
 };

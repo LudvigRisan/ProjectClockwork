@@ -18,6 +18,19 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
+
+
+	APlayerController* MyController = GetWorld()->GetFirstPlayerController();
+
+	if (MyController) {
+		MyController->bShowMouseCursor = true;
+		MyController->bEnableClickEvents = true;
+	}
+	else {
+
+		UE_LOG(LogTemp, Warning, TEXT("Missing playercontroller"));
+
+	}
 }
 
 // Called every frame
