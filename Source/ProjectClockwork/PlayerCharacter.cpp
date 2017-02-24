@@ -19,6 +19,8 @@ void APlayerCharacter::BeginPlay()
 	
 	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 
+	
+
 
 	APlayerController* MyController = GetWorld()->GetFirstPlayerController();
 
@@ -38,9 +40,16 @@ void APlayerCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	APlayerCharacter::move(DeltaTime);
+	if (rolling) {
+		APlayerCharacter::rollMove(DeltaTime);
+	} else {
+		APlayerCharacter::move(DeltaTime);
+	}
 
-	
+	APlayerCharacter::trackMouse();
+
+	APlayerCharacter::pointToMouse();
+
 }
 
 // Called to bind functionality to input
@@ -50,10 +59,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	
-
 	InputComponent->BindAxis("InputX", this, &APlayerCharacter::xInput);
 	InputComponent->BindAxis("InputY", this, &APlayerCharacter::yInput);
+
+	InputComponent->BindAction("Attack", IE_Pressed, this, &APlayerCharacter::attack);
+	InputComponent->BindAction("Roll", IE_Pressed, this, &APlayerCharacter::roll);
 }
 
 void APlayerCharacter::xInput(float axis) {
@@ -71,6 +81,70 @@ void APlayerCharacter::move(float DeltaTime) {
 	
 	movement = {FMath::Lerp(movement.X, targetMovement.X, acelleration * DeltaTime), FMath::Lerp(movement.Y, targetMovement.Y, acelleration * DeltaTime), 0};
 	
+	
 
-	AddMovementInput(movement, DeltaTime * speed);
+	LaunchCharacter(movement * DeltaTime * speed, true, false);
+}
+
+void APlayerCharacter::trackMouse() {
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		FHitResult TraceHitResult;
+		PC->GetHitResultUnderCursor(ECC_GameTraceChannel1, true, TraceHitResult);
+		cursorLocation = TraceHitResult.Location;
+
+	}
+}
+
+void APlayerCharacter::pointToMouse() {
+	FVector mouseDist = {cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0};
+	FRotator mouseRot = mouseDist.Rotation();
+	SetActorRotation(mouseRot.Quaternion());
+}
+
+bool APlayerCharacter::damage() {
+	if (!invulnerable) {
+		health--;
+		if (health <= 0) {
+			APlayerCharacter::die();
+		}
+		return true;
+	}
+	return false;
+}
+
+void APlayerCharacter::die() {
+	UE_LOG(LogTemp, Warning, TEXT("DED!"));
+}
+
+void APlayerCharacter::roll() {
+	if (!rolling) {
+		UE_LOG(LogTemp, Warning, TEXT("Swish!"));
+		rollDirection = { cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0 };
+		rollDirection.Normalize();
+
+		rolling = true;
+		invulnerable = true;
+	}
+}
+
+void APlayerCharacter::rollMove(float deltaTime) {
+	if (rollingTimer >= rollTime) {
+		rolling = false;
+		rollingTimer = 0;
+	} else if (rollingTimer >= rollInvulTime && invulnerable) {
+		invulnerable = false;
+
+		rollingTimer += deltaTime;
+		LaunchCharacter(rollDirection * deltaTime * rollSpeed, true, false);
+		//AddMovementInput(rollDirection, deltaTime * rollSpeed);
+	} else {
+		rollingTimer += deltaTime;
+
+		LaunchCharacter(rollDirection * deltaTime * rollSpeed, true, false);
+	}
+}
+
+void APlayerCharacter::attack() {
+	UE_LOG(LogTemp, Warning, TEXT("Boff!"));
 }
