@@ -28,12 +28,23 @@ public:
 	void yInput(float axis);
 
 	void move(float DeltaTime);
+
+	void trackMouse();
+
+	void pointToMouse();
 	
 	FVector movement = { 0, 0, 0 };
 	FVector targetMovement = { 0, 0, 0 };
+	FVector cursorLocation = { 0, 0, 0 };
+	FVector rollDirection = { 0, 0, 0 };
 
 	float xIn = 0;
 	float yIn = 0;
+	float rollingTimer = 0;
+	float InvulTimer = 0;
+
+	bool invulnerable = false;
+	bool rolling = false;
 
 	UPROPERTY(EditAnywhere)
 		float speed = 1;
@@ -41,5 +52,28 @@ public:
 	UPROPERTY(EditAnywhere)
 		float acelleration = 1;
 
+	UPROPERTY(EditAnywhere)
+		float rollSpeed = 1;
+
+	UPROPERTY(EditAnywhere)
+		float rollTime = 1;
+
+	UPROPERTY(EditAnywhere)
+		float rollInvulTime = 1;
+
+	UPROPERTY(Category = "Life", EditAnywhere)
+		int health = 3;
+
+	UPROPERTY(Category = "Life", EditAnywhere)
+		float damageInvulTime = 1;
+
+	bool damage();
 	
+	void die();
+
+	void roll();
+
+	void attack();
+
+	void rollMove(float deltaTime);
 };
