@@ -3,6 +3,7 @@
 #include "ProjectClockwork.h"
 #include "PlayerCharacter.h"
 
+#include "PlayerBullet.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -146,5 +147,28 @@ void APlayerCharacter::rollMove(float deltaTime) {
 }
 
 void APlayerCharacter::attack() {
+	if (ammo) {
+		APlayerCharacter::shoot();
+	} else {
+		APlayerCharacter::hit();
+	}
+}
+
+void APlayerCharacter::shoot() {
 	UE_LOG(LogTemp, Warning, TEXT("Boff!"));
+	UWorld* world = GetWorld();
+	if (world) {
+		FVector direction = { cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0 };
+		direction.Normalize();
+
+		APlayerBullet* bullet = world->SpawnActor<APlayerBullet>(BulletBlueprint, GetActorLocation() + bulletOffset, GetActorRotation());
+
+		bullet->launch(direction);
+
+		ammo = false;
+	}
+}
+
+void APlayerCharacter::hit() {
+	UE_LOG(LogTemp, Warning, TEXT("Swing!"));
 }
