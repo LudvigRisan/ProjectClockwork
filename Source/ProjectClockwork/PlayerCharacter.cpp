@@ -102,6 +102,7 @@ void APlayerCharacter::pointToMouse() {
 bool APlayerCharacter::damage() {
 	if (!invulnerable) {
 		health--;
+		UE_LOG(LogTemp, Warning, TEXT("OUCH!"));
 		if (health <= 0) {
 			APlayerCharacter::die();
 		}
