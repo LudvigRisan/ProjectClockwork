@@ -3,6 +3,7 @@
 #include "ProjectClockwork.h"
 #include "Bullet.h"
 
+#include "PlayerCharacter.h"
 
 // Sets default values
 ABullet::ABullet()
@@ -17,7 +18,7 @@ void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	CollisionBox = this->FindComponentByClass<UCapsuleComponent>();		//For collision
+	CollisionBox = this->FindComponentByClass<USphereComponent>();		//For collision
 
 	if (CollisionBox) {
 		CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnOverlap);
@@ -36,6 +37,8 @@ void ABullet::Tick( float DeltaTime )
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
+	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {
 
+	}
 
 }

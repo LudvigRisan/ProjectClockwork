@@ -23,18 +23,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void xInput(float axis);
-
-	void yInput(float axis);
-
-	void move(float DeltaTime);
-
-	void trackMouse();
-
-	void pointToMouse();
 	
-	FVector movement = { 0, 0, 0 };
-	FVector targetMovement = { 0, 0, 0 };
 	FVector cursorLocation = { 0, 0, 0 };
 	FVector rollDirection = { 0, 0, 0 };
 
@@ -45,12 +34,10 @@ public:
 
 	bool invulnerable = false;
 	bool rolling = false;
+	bool ammo = true;
 
 	UPROPERTY(EditAnywhere)
 		float speed = 1;
-
-	UPROPERTY(EditAnywhere)
-		float acelleration = 1;
 
 	UPROPERTY(EditAnywhere)
 		float rollSpeed = 1;
@@ -67,13 +54,33 @@ public:
 	UPROPERTY(Category = "Life", EditAnywhere)
 		float damageInvulTime = 1;
 
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class APlayerBullet> BulletBlueprint;
+
+	UPROPERTY(EditAnywhere)
+		FVector bulletOffset = { 0, 0, 0 };
+
+	void xInput(float axis);
+
+	void yInput(float axis);
+	
+	void move(float DeltaTime);
+
+	void trackMouse();
+
+	void pointToMouse();
+
 	bool damage();
 	
 	void die();
 
 	void roll();
 
+	void rollMove(float deltaTime);
+
 	void attack();
 
-	void rollMove(float deltaTime);
+	void shoot();
+
+	void hit();
 };

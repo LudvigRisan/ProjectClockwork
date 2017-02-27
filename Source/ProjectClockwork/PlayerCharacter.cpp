@@ -3,6 +3,7 @@
 #include "ProjectClockwork.h"
 #include "PlayerCharacter.h"
 
+#include "PlayerBullet.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -76,14 +77,10 @@ void APlayerCharacter::yInput(float axis) {
 
 void APlayerCharacter::move(float DeltaTime) {
 
-	targetMovement = { xIn, yIn, 0 };
-	targetMovement.Normalize();
-	
-	movement = {FMath::Lerp(movement.X, targetMovement.X, acelleration * DeltaTime), FMath::Lerp(movement.Y, targetMovement.Y, acelleration * DeltaTime), 0};
-	
+	FVector movement = { xIn, yIn, 0 };
 	
 
-	LaunchCharacter(movement * DeltaTime * speed, true, false);
+	AddMovementInput(movement * DeltaTime * speed);
 }
 
 void APlayerCharacter::trackMouse() {
@@ -136,15 +133,38 @@ void APlayerCharacter::rollMove(float deltaTime) {
 		invulnerable = false;
 
 		rollingTimer += deltaTime;
-		LaunchCharacter(rollDirection * deltaTime * rollSpeed, true, false);
+		SetActorLocation(GetActorLocation() + rollDirection * deltaTime * rollSpeed, true);
 		//AddMovementInput(rollDirection, deltaTime * rollSpeed);
 	} else {
 		rollingTimer += deltaTime;
 
-		LaunchCharacter(rollDirection * deltaTime * rollSpeed, true, false);
+		SetActorLocation(GetActorLocation() + rollDirection * deltaTime * rollSpeed, true);
 	}
 }
 
 void APlayerCharacter::attack() {
+	if (ammo) {
+		APlayerCharacter::shoot();
+	} else {
+		APlayerCharacter::hit();
+	}
+}
+
+void APlayerCharacter::shoot() {
 	UE_LOG(LogTemp, Warning, TEXT("Boff!"));
+	UWorld* world = GetWorld();
+	if (world) {
+		FVector direction = { cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0 };
+		direction.Normalize();
+
+		APlayerBullet* bullet = world->SpawnActor<APlayerBullet>(BulletBlueprint, GetActorLocation() + bulletOffset, GetActorRotation());
+
+		bullet->launch(direction);
+
+		ammo = false;
+	}
+}
+
+void APlayerCharacter::hit() {
+	UE_LOG(LogTemp, Warning, TEXT("Swing!"));
 }
