@@ -24,8 +24,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	
-	FVector movement = { 0, 0, 0 };
-	FVector targetMovement = { 0, 0, 0 };
 	FVector cursorLocation = { 0, 0, 0 };
 	FVector rollDirection = { 0, 0, 0 };
 
@@ -40,9 +38,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float speed = 1;
-
-	UPROPERTY(EditAnywhere)
-		float acelleration = 1;
 
 	UPROPERTY(EditAnywhere)
 		float rollSpeed = 1;

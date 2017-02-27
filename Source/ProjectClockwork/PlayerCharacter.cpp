@@ -77,14 +77,10 @@ void APlayerCharacter::yInput(float axis) {
 
 void APlayerCharacter::move(float DeltaTime) {
 
-	targetMovement = { xIn, yIn, 0 };
-	targetMovement.Normalize();
-	
-	movement = {FMath::Lerp(movement.X, targetMovement.X, acelleration * DeltaTime), FMath::Lerp(movement.Y, targetMovement.Y, acelleration * DeltaTime), 0};
-	
+	FVector movement = { xIn, yIn, 0 };
 	
 
-	LaunchCharacter(movement * DeltaTime * speed, true, false);
+	AddMovementInput(movement * DeltaTime * speed);
 }
 
 void APlayerCharacter::trackMouse() {
@@ -137,12 +133,12 @@ void APlayerCharacter::rollMove(float deltaTime) {
 		invulnerable = false;
 
 		rollingTimer += deltaTime;
-		LaunchCharacter(rollDirection * deltaTime * rollSpeed, true, false);
+		SetActorLocation(GetActorLocation() + rollDirection * deltaTime * rollSpeed, true);
 		//AddMovementInput(rollDirection, deltaTime * rollSpeed);
 	} else {
 		rollingTimer += deltaTime;
 
-		LaunchCharacter(rollDirection * deltaTime * rollSpeed, true, false);
+		SetActorLocation(GetActorLocation() + rollDirection * deltaTime * rollSpeed, true);
 	}
 }
 
