@@ -24,5 +24,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class ABullet> BulletBlueprint;
+
+	void shoot(FVector dir);
 	
 };

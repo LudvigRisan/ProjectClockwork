@@ -20,7 +20,13 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	virtual void launch();
+	virtual void launch(FVector direction);
+
+	virtual void move(float DeltaTime);
+
+	FVector movement = { 0, 0, 0 };
+
+	bool launched = false;
 
 	UShapeComponent* CollisionBox = nullptr;
 	
