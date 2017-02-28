@@ -46,3 +46,7 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherA
 	}
 
 }
+
+void ABullet::launch() {
+
+}
