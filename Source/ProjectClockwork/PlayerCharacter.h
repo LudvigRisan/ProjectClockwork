@@ -26,6 +26,7 @@ public:
 	
 	FVector cursorLocation = { 0, 0, 0 };
 	FVector rollDirection = { 0, 0, 0 };
+	FVector originLocation;
 
 	float xIn = 0;
 	float yIn = 0;
