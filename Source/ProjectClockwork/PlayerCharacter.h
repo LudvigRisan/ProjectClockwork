@@ -35,6 +35,7 @@ public:
 	bool invulnerable = false;
 	bool rolling = false;
 	bool ammo = true;
+	bool damaged = false;
 
 	UPROPERTY(EditAnywhere)
 		float speed = 1;

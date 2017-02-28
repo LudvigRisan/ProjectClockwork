@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "PlayerCharacter.h"
 #include "Turret.generated.h"
 
 UCLASS()
@@ -26,5 +27,16 @@ public:
 		TSubclassOf<class ABullet> BulletBlueprint;
 
 	void shoot(FVector dir);
-	
+
+	FVector direction = { 0, 0, 0 };
+
+	float shootingTimer = 0;
+
+	void aim();
+
+	UPROPERTY(EditAnywhere)
+		APlayerCharacter* target;
+
+	UPROPERTY(EditAnywhere)
+		float fireRate = 1;
 };

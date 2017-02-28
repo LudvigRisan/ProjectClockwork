@@ -2,6 +2,7 @@
 
 #include "ProjectClockwork.h"
 #include "Turret.h"
+#include "Bullet.h"
 
 
 // Sets default values
@@ -24,9 +25,29 @@ void ATurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	ATurret::aim();
+
+	shootingTimer += DeltaTime;
+
+	if (shootingTimer > 1 / fireRate) {
+		shootingTimer = 0;
+		shoot(direction);
+	}
+
 }
 
 
 void ATurret::shoot(FVector dir) {
+	UWorld* world = GetWorld();
+	if (world) {
+		ABullet* bullet = world->SpawnActor<ABullet>(BulletBlueprint, GetActorLocation(), dir.Rotation());
 
+		bullet->launch(dir * 300);
+	}
+}
+
+void ATurret::aim() {
+	direction = target->GetActorLocation() - GetActorLocation();
+	direction.Normalize();
+	SetActorRotation(direction.Rotation());
 }
