@@ -4,6 +4,7 @@
 #include "Bullet.h"
 
 #include "PlayerCharacter.h"
+#include "PlayerBullet.h"
 
 // Sets default values
 ABullet::ABullet()
@@ -33,6 +34,14 @@ void ABullet::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+	ABullet::move(DeltaTime);
+
+	killtimer += DeltaTime;
+
+	if (killtimer >= lifespan) {
+		Destroy();
+	}
+
 }
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
@@ -44,9 +53,16 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherA
 			Destroy();
 		}
 	}
+	else if (killtimer >= 0.1f && !OtherActor->IsA(ABullet::StaticClass())) {
+		Destroy();
+	}
 
 }
 
 void ABullet::launch(FVector direction) {
+	movement = direction;
+}
 
+void ABullet::move(float DeltaTime) {
+	SetActorLocation(GetActorLocation() + movement * DeltaTime);
 }

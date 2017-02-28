@@ -47,6 +47,15 @@ void APlayerCharacter::Tick( float DeltaTime )
 		APlayerCharacter::move(DeltaTime);
 	}
 
+	if (damaged) {
+		InvulTimer += DeltaTime;
+		if (InvulTimer >= damageInvulTime) {
+			damaged = false;
+			invulnerable = false;
+			InvulTimer = 0;
+		}
+	}
+
 	APlayerCharacter::trackMouse();
 
 	APlayerCharacter::pointToMouse();
@@ -106,6 +115,8 @@ bool APlayerCharacter::damage() {
 		if (health <= 0) {
 			APlayerCharacter::die();
 		}
+		invulnerable = true;
+		damaged = true;
 		return true;
 	}
 	return false;

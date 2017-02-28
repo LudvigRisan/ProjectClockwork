@@ -30,6 +30,9 @@ public:
 
 	UShapeComponent* CollisionBox = nullptr;
 	
+	float killtimer = 0;
+	float lifespan = 7; 
+
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 			UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
