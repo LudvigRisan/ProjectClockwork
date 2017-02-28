@@ -21,7 +21,7 @@ void APlayerCharacter::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 
 	
-
+	originLocation = GetActorLocation();
 
 	APlayerController* MyController = GetWorld()->GetFirstPlayerController();
 
@@ -54,6 +54,10 @@ void APlayerCharacter::Tick( float DeltaTime )
 			invulnerable = false;
 			InvulTimer = 0;
 		}
+	}
+
+	if (GetActorLocation().Z <= 0) {
+		SetActorLocation(originLocation);
 	}
 
 	APlayerCharacter::trackMouse();
