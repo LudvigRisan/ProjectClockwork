@@ -26,3 +26,7 @@ void ATurret::Tick(float DeltaTime)
 
 }
 
+
+void ATurret::shoot(FVector dir) {
+
+}
