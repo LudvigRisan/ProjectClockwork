@@ -38,22 +38,22 @@ public:
 	bool ammo = true;
 	bool damaged = false;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float speed = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float rollSpeed = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float rollTime = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float rollInvulTime = 1;
 
-	UPROPERTY(Category = "Life", EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Life")
 		int health = 3;
 
-	UPROPERTY(Category = "Life", EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Life")
 		float damageInvulTime = 1;
 
 	UPROPERTY(EditAnywhere)
