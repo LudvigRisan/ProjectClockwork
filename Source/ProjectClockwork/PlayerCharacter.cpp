@@ -21,9 +21,9 @@ void APlayerCharacter::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 
 	
-	originLocation = GetActorLocation();
+	originLocation = GetActorLocation();										//Origin used to respawn player on fall of stage
 
-	APlayerController* MyController = GetWorld()->GetFirstPlayerController();
+	APlayerController* MyController = GetWorld()->GetFirstPlayerController();	//For enabling the cursor
 
 	if (MyController) {
 		MyController->bShowMouseCursor = true;
@@ -31,7 +31,7 @@ void APlayerCharacter::BeginPlay()
 	}
 	else {
 
-		UE_LOG(LogTemp, Warning, TEXT("Missing playercontroller"));
+		UE_LOG(LogTemp, Warning, TEXT("Missing playercontroller"));	
 
 	}
 }
@@ -47,7 +47,7 @@ void APlayerCharacter::Tick( float DeltaTime )
 		APlayerCharacter::move(DeltaTime);
 	}
 
-	if (damaged) {
+	if (damaged) {																//invulnerable on taking damage
 		InvulTimer += DeltaTime;
 		if (InvulTimer >= damageInvulTime) {
 			damaged = false;
@@ -56,8 +56,9 @@ void APlayerCharacter::Tick( float DeltaTime )
 		}
 	}
 
-	if (GetActorLocation().Z <= 0) {
-		SetActorLocation(originLocation);
+	if (GetActorLocation().Z <= 0) {											//Respawn on fall of stage, will add a uproperty variable for
+		SetActorLocation(originLocation);										//fall of limit
+		APlayerCharacter::damage();
 	}
 
 	APlayerCharacter::trackMouse();
@@ -73,9 +74,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAxis("InputX", this, &APlayerCharacter::xInput);
+	InputComponent->BindAxis("InputX", this, &APlayerCharacter::xInput);		//movement input
 	InputComponent->BindAxis("InputY", this, &APlayerCharacter::yInput);
-
+																				//mousebuttons for roll/attack
 	InputComponent->BindAction("Attack", IE_Pressed, this, &APlayerCharacter::attack);
 	InputComponent->BindAction("Roll", IE_Pressed, this, &APlayerCharacter::roll);
 }
@@ -90,14 +91,14 @@ void APlayerCharacter::yInput(float axis) {
 
 void APlayerCharacter::move(float DeltaTime) {
 
-	FVector movement = { xIn, yIn, 0 };
-	
+	FVector movement = { xIn, yIn, 0 };											//Make movement vector from input
+	movement.Normalize();
 
 	AddMovementInput(movement * DeltaTime * speed);
 }
 
 void APlayerCharacter::trackMouse() {
-	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))		//Set cursorLocation to where the cursor is pointing
 	{
 		FHitResult TraceHitResult;
 		PC->GetHitResultUnderCursor(ECC_GameTraceChannel1, true, TraceHitResult);
@@ -106,20 +107,20 @@ void APlayerCharacter::trackMouse() {
 	}
 }
 
-void APlayerCharacter::pointToMouse() {
+void APlayerCharacter::pointToMouse() {											//Currently rotating the object to mouse, will change this later as rotation should be decided by movement
 	FVector mouseDist = {cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0};
 	FRotator mouseRot = mouseDist.Rotation();
 	SetActorRotation(mouseRot.Quaternion());
 }
 
-bool APlayerCharacter::damage() {
+bool APlayerCharacter::damage() {												//Damage returns bool to let bullets pass through on no damage taken
 	if (!invulnerable) {
 		health--;
 		UE_LOG(LogTemp, Warning, TEXT("OUCH!"));
 		if (health <= 0) {
 			APlayerCharacter::die();
 		}
-		invulnerable = true;
+		invulnerable = true;													//Start invulnerable time
 		damaged = true;
 		return true;
 	}
@@ -127,12 +128,13 @@ bool APlayerCharacter::damage() {
 }
 
 void APlayerCharacter::die() {
-	UE_LOG(LogTemp, Warning, TEXT("DED!"));
+	UE_LOG(LogTemp, Warning, TEXT("DED!"));										//Todo: Make a die function
+	UGameplayStatics::OpenLevel(GetWorld(), "TestMap");
 }
 
 void APlayerCharacter::roll() {
 	if (!rolling) {
-		UE_LOG(LogTemp, Warning, TEXT("Swish!"));
+		UE_LOG(LogTemp, Warning, TEXT("Swish!"));								//Get the direction of the roll and start rolling
 		rollDirection = { cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0 };
 		rollDirection.Normalize();
 
@@ -142,16 +144,16 @@ void APlayerCharacter::roll() {
 }
 
 void APlayerCharacter::rollMove(float deltaTime) {
-	if (rollingTimer >= rollTime) {
+	if (rollingTimer >= rollTime) {												//stopp rolling
 		rolling = false;
 		rollingTimer = 0;
-	} else if (rollingTimer >= rollInvulTime && invulnerable) {
+	} else if (rollingTimer >= rollInvulTime && invulnerable) {					//Stop the invulnerability towards the end of the roll
 		invulnerable = false;
 
 		rollingTimer += deltaTime;
 		SetActorLocation(GetActorLocation() + rollDirection * deltaTime * rollSpeed, true);
 		//AddMovementInput(rollDirection, deltaTime * rollSpeed);
-	} else {
+	} else {																	//The rolling motion
 		rollingTimer += deltaTime;
 
 		SetActorLocation(GetActorLocation() + rollDirection * deltaTime * rollSpeed, true);
@@ -159,9 +161,9 @@ void APlayerCharacter::rollMove(float deltaTime) {
 }
 
 void APlayerCharacter::attack() {
-	if (ammo) {
+	if (ammo) {																	//Use the ranged attack if the player has ammo,
 		APlayerCharacter::shoot();
-	} else {
+	} else {																	//Use a mele attack (not yet made)
 		APlayerCharacter::hit();
 	}
 }
@@ -169,7 +171,7 @@ void APlayerCharacter::attack() {
 void APlayerCharacter::shoot() {
 	UE_LOG(LogTemp, Warning, TEXT("Boff!"));
 	UWorld* world = GetWorld();
-	if (world) {
+	if (world) {																//Create bullet and set it to move the direction you are pointing.
 		FVector direction = { cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0 };
 		direction.Normalize();
 

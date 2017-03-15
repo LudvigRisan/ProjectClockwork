@@ -38,7 +38,7 @@ void ABullet::Tick( float DeltaTime )
 
 	killtimer += DeltaTime;
 
-	if (killtimer >= lifespan) {
+	if (killtimer >= lifespan) {										//Destroy bullet after a certain time
 		Destroy();
 	}
 
