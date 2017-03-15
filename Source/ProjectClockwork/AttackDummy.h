@@ -8,6 +8,7 @@
 
 UCLASS()
 class PROJECTCLOCKWORK_API AAttackDummy : public ADamageTarget
+{
 	GENERATED_BODY()
 	
 public:	
@@ -22,6 +23,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
+	virtual void shoot() override;
+
+	virtual void hit() override;
+
+	virtual void other(float amount) override;
 	
 };

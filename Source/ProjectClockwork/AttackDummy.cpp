@@ -26,3 +26,14 @@ void AAttackDummy::Tick(float DeltaTime)
 
 }
 
+void AAttackDummy::shoot() {
+	UE_LOG(LogTemp, Warning, TEXT("PAFF!"));
+}
+
+void AAttackDummy::hit() {
+	UE_LOG(LogTemp, Warning, TEXT("SLASH!"));
+}
+
+void AAttackDummy::other(float amount) {
+	UE_LOG(LogTemp, Warning, TEXT("Damaged: %f!"), amount);
+}
