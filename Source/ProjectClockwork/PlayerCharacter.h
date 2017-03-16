@@ -35,7 +35,6 @@ public:
 
 	bool invulnerable = false;
 	bool rolling = false;
-	bool ammo = true;
 	bool damaged = false;
 
 	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
@@ -50,11 +49,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float rollInvulTime = 1;
 
-	UPROPERTY(EditAnywhere, Category = "Life")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		int health = 3;
 
 	UPROPERTY(EditAnywhere, Category = "Life")
 		float damageInvulTime = 1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+	    bool ammo = true;
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class APlayerBullet> BulletBlueprint;
