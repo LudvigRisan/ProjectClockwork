@@ -9,8 +9,8 @@ UCLASS()
 class PROJECTCLOCKWORK_API ADoomFurnace : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ADoomFurnace();
 
@@ -18,7 +18,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -26,22 +26,22 @@ public:
 		float MaxHealth = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
-		TArray<class AAttackPattern> stageOneAttacks;
+		TArray<class AAttackPattern*> stageOneAttacks;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
 		float stageTwoLimit = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
-		TArray<class AAttackPattern> stageTwoAttacks;
+		TArray<class AAttackPattern*> stageTwoAttacks;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
 		float stageThreeLimit = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
-		TArray<class AAttackPattern> stageThreeAttacks;
+		TArray<class AAttackPattern*> stageThreeAttacks;
 
 	float health = 99999999;
-	
+
 	int32 lastAttack = 0;
 
 	void chooseAttack();
