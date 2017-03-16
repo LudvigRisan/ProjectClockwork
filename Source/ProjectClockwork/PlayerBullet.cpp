@@ -58,6 +58,4 @@ void APlayerBullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *
 		hit->shoot();
 		Destroy();
 	}
-
-
 }

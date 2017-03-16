@@ -177,7 +177,9 @@ void APlayerCharacter::shoot() {
 
 		APlayerBullet* bullet = world->SpawnActor<APlayerBullet>(BulletBlueprint, GetActorLocation() + bulletOffset, GetActorRotation());
 
-		bullet->launch(direction);
+		if (bullet != nullptr) {
+			bullet->launch(direction);
+		}
 
 		ammo = false;
 	}
