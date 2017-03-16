@@ -3,6 +3,7 @@
 #include "ProjectClockwork.h"
 #include "DoomFurnace.h"
 
+#include "AttackPattern.h"
 
 // Sets default values
 ADoomFurnace::ADoomFurnace() {
@@ -30,10 +31,41 @@ void ADoomFurnace::chooseAttack() {
 		bool randomCheck = false;
 		do {
 			int32 randomselect = rand() % stageOneAttacks.Num();
+			if (randomselect != lastAttack) {
+				randomCheck = true;
+				lastAttack = randomselect;
+				UWorld* world = GetWorld();
+				if (world) {
+					world->SpawnActor<AAttackPattern>(stageOneAttacks[randomselect], GetActorLocation(), GetActorRotation());
+				}
+			}
 		} while (!randomCheck);
 	} else if (health > stageThreeLimit) {
-
+		bool randomCheck = false;
+		do {
+			int32 randomselect = rand() % stageTwoAttacks.Num();
+			if (randomselect != lastAttack) {
+				randomCheck = true;
+				lastAttack = randomselect;
+				UWorld* world = GetWorld();
+				if (world) {
+					world->SpawnActor<AAttackPattern>(stageTwoAttacks[randomselect], GetActorLocation(), GetActorRotation());
+				}
+			}
+		} while (!randomCheck);
 	} else {
+		bool randomCheck = false;
+		do {
+			int32 randomselect = rand() % stageThreeAttacks.Num();
+			if (randomselect != lastAttack) {
+				randomCheck = true;
+				lastAttack = randomselect;
+				UWorld* world = GetWorld();
+				if (world) {
+					world->SpawnActor<AAttackPattern>(stageThreeAttacks[randomselect], GetActorLocation(), GetActorRotation());
+				}
+			}
+		} while (!randomCheck);
 
 	}
 }
