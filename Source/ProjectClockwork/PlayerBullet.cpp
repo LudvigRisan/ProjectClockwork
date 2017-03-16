@@ -2,6 +2,7 @@
 
 #include "ProjectClockwork.h"
 #include "PlayerBullet.h"
+#include "DamageTarget.h"
 
 
 // Sets default values
@@ -52,5 +53,9 @@ void APlayerBullet::move(float DeltaTime) {
 
 void APlayerBullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
-	UE_LOG(LogTemp, Warning, TEXT("BAFF!"));
+	if (OtherActor->IsA(ADamageTarget::StaticClass())) {
+		ADamageTarget * hit = Cast<ADamageTarget>(OtherActor);
+		hit->shoot();
+		Destroy();
+	}
 }

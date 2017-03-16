@@ -26,8 +26,13 @@ public:
 
 	bool launched = false;
 
+	float age = 0;
+
 	UPROPERTY(EditAnywhere)
 		float projectileSpeed = 1;
+
+	UPROPERTY(EditAnywhere)
+		float lifespan = 20;
 
 	void launch(FVector direction);
 	
