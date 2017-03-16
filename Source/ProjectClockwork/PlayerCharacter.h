@@ -50,7 +50,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float rollInvulTime = 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+	UPROPERTY(EditAnywhere, Category = "Life")
 		int health = 3;
 
 	UPROPERTY(EditAnywhere, Category = "Life")
