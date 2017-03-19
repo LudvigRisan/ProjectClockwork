@@ -25,7 +25,7 @@ void AAP1CornerTurret::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	age += DeltaTime;
-	if (age > lifespan) {
+	if (age > lifeTime) {
 		AAP1CornerTurret::endAttack();
 	}
 
@@ -45,6 +45,13 @@ void AAP1CornerTurret::endAttack() {
 	for (int i = 0; i < turrets.Num(); i++) {
 		if (turrets[i]) {
 			turrets[i]->Destroy();
+		}
+	}
+
+	if (ammoDrop) {
+		UWorld* world = GetWorld();
+		if (world) {
+			world->SpawnActor<AAmmoPickup>(pickupBlueprint, ammoLocation, GetActorRotation());
 		}
 	}
 	Destroy();
