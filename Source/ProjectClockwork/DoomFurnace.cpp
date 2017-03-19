@@ -18,6 +18,7 @@ void ADoomFurnace::BeginPlay() {
 
 	health = MaxHealth;
 
+	ADoomFurnace::chooseAttack();
 }
 
 // Called every frame
