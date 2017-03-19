@@ -26,16 +26,16 @@ public:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class ABullet> BulletBlueprint;
 
-	void shoot(FVector dir);
+	virtual void shoot(FVector dir);
 
 	FVector direction = { 0, 0, 0 };
 
 	float shootingTimer = 0;
 
-	void aim();
+	virtual void aim();
 
 	UPROPERTY(EditAnywhere)
-		APlayerCharacter* target;
+		AActor* target;
 
 	UPROPERTY(EditAnywhere)
 		float fireRate = 1;

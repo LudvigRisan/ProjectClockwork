@@ -24,7 +24,7 @@ void AAP1CornerTurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	age += DeltaTime;
+	age += DeltaTime;											//Lifespan timer
 	if (age > lifeTime) {
 		AAP1CornerTurret::endAttack();
 	}
@@ -32,7 +32,7 @@ void AAP1CornerTurret::Tick(float DeltaTime)
 }
 
 void AAP1CornerTurret::beginAttack() {
-	UWorld* world = GetWorld();
+	UWorld* world = GetWorld();									//Spawn one turret for each position and store a reference to each
 	if (world) {
 		for (int i = 0; i < positions.Num(); i++) {
 			ATurret * turret = world->SpawnActor<ATurret>(turretBlueprint, positions[i], GetActorRotation());
@@ -41,14 +41,14 @@ void AAP1CornerTurret::beginAttack() {
 	}
 }
 
-void AAP1CornerTurret::endAttack() {
+void AAP1CornerTurret::endAttack() {							//Delete all spawned turrets
 	for (int i = 0; i < turrets.Num(); i++) {
 		if (turrets[i]) {
 			turrets[i]->Destroy();
 		}
 	}
 
-	if (ammoDrop) {
+	if (ammoDrop) {												//Spawn an ammo pickup if called for
 		UWorld* world = GetWorld();
 		if (world) {
 			world->SpawnActor<AAmmoPickup>(pickupBlueprint, ammoLocation, GetActorRotation());
