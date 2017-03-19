@@ -23,6 +23,4 @@ void AAttackPattern::Tick(float DeltaTime) {
 
 }
 
-void AAttackPattern::beginAttack(){}
 
-void AAttackPattern::endAttack(){}

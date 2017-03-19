@@ -17,11 +17,7 @@ ATurret::ATurret()
 void ATurret::BeginPlay()
 {
 	Super::BeginPlay();
-	if (!target) {
-		TArray<AActor*> getplayer;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerCharacter::StaticClass(), getplayer);
-		target = Cast<APlayerCharacter>(getplayer[0]);
-	}
+	
 }
 
 // Called every frame
@@ -42,21 +38,16 @@ void ATurret::Tick(float DeltaTime)
 
 
 void ATurret::shoot(FVector dir) {
-	if (target) {
-		UWorld* world = GetWorld();
-		if (world) {
-			ABullet* bullet = world->SpawnActor<ABullet>(BulletBlueprint, GetActorLocation(), dir.Rotation());
-			if (bullet) {
-				bullet->launch(dir * 300);
-			}
-		}
+	UWorld* world = GetWorld();
+	if (world) {
+		ABullet* bullet = world->SpawnActor<ABullet>(BulletBlueprint, GetActorLocation(), dir.Rotation());
+
+		bullet->launch(dir * 300);
 	}
 }
 
 void ATurret::aim() {
-	if (target) {
-		direction = target->GetActorLocation() - GetActorLocation();
-		direction.Normalize();
-		SetActorRotation(direction.Rotation());
-	}
+	direction = target->GetActorLocation() - GetActorLocation();
+	direction.Normalize();
+	SetActorRotation(direction.Rotation());
 }
