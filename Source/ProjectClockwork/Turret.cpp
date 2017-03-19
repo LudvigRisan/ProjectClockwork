@@ -16,11 +16,11 @@ ATurret::ATurret()
 // Called when the game starts or when spawned
 void ATurret::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay();							//unless given a target, aim for player
 	if (!target) {
 		TArray<AActor*> getplayer;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerCharacter::StaticClass(), getplayer);
-		target = Cast<APlayerCharacter>(getplayer[0]);
+		target = getplayer[0];
 	}
 }
 

@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "AttackPattern.h"
+#include "AmmoPickup.h"
 #include "AP1CornerTurret.generated.h"
 
 UCLASS()
@@ -28,14 +29,23 @@ public:
 
 	virtual void endAttack() override;
 
-	UPROPERTY(EditAnywhere)
-		float lifespan = 1;
+	UPROPERTY(EditAnywhere, Category = "Turrets")
+		float lifeTime = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Turrets")
 		TSubclassOf<class ATurret> turretBlueprint;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Turrets")
 		TArray<FVector> positions;
+
+	UPROPERTY(EditAnywhere, Category = "Pickup")
+		bool ammoDrop = false;
+
+	UPROPERTY(EditAnywhere, Category = "Pickup")
+		TSubclassOf<class AAmmoPickup> pickupBlueprint;
+
+	UPROPERTY(EditAnywhere, Category = "Pickup")
+		FVector ammoLocation;
 
 	TArray<class ATurret*> turrets;
 
