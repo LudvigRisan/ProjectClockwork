@@ -28,9 +28,9 @@ void ADoomFurnace::Tick(float DeltaTime) {
 }
 
 void ADoomFurnace::chooseAttack() {
-	if (health > stageTwoLimit) {
+	if (health < stageTwoLimit) {
 		bool randomCheck = false;
-		do {
+		while (!randomCheck) {
 			int32 randomselect = rand() % stageOneAttacks.Num();
 			if (randomselect != lastAttack) {
 				randomCheck = true;
@@ -40,10 +40,10 @@ void ADoomFurnace::chooseAttack() {
 					world->SpawnActor<AAttackPattern>(stageOneAttacks[randomselect], GetActorLocation(), GetActorRotation());
 				}
 			}
-		} while (!randomCheck);
-	} else if (health > stageThreeLimit) {
+		}
+	} else if (health < stageThreeLimit) {
 		bool randomCheck = false;
-		do {
+		while (!randomCheck) {
 			int32 randomselect = rand() % stageTwoAttacks.Num();
 			if (randomselect != lastAttack) {
 				randomCheck = true;
@@ -53,10 +53,10 @@ void ADoomFurnace::chooseAttack() {
 					world->SpawnActor<AAttackPattern>(stageTwoAttacks[randomselect], GetActorLocation(), GetActorRotation());
 				}
 			}
-		} while (!randomCheck);
+		}
 	} else {
 		bool randomCheck = false;
-		do {
+		while (!randomCheck) {
 			int32 randomselect = rand() % stageThreeAttacks.Num();
 			if (randomselect != lastAttack) {
 				randomCheck = true;
@@ -66,7 +66,7 @@ void ADoomFurnace::chooseAttack() {
 					world->SpawnActor<AAttackPattern>(stageThreeAttacks[randomselect], GetActorLocation(), GetActorRotation());
 				}
 			}
-		} while (!randomCheck);
+		}
 
 	}
 }

@@ -42,7 +42,7 @@ public:
 
 	float health = 99999999;
 
-	int32 lastAttack = 0;
+	int32 lastAttack = 500;
 
 	void chooseAttack();
 

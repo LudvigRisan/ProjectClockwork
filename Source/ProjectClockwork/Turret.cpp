@@ -42,21 +42,20 @@ void ATurret::Tick(float DeltaTime)
 
 
 void ATurret::shoot(FVector dir) {
-	if (target) {
 		UWorld* world = GetWorld();
 		if (world) {
 			ABullet* bullet = world->SpawnActor<ABullet>(BulletBlueprint, GetActorLocation(), dir.Rotation());
 			if (bullet) {
-				bullet->launch(dir * 300);
+				bullet->launch(dir * projectileSpeed);
 			}
 		}
-	}
 }
 
 void ATurret::aim() {
 	if (target) {
 		direction = target->GetActorLocation() - GetActorLocation();
 		direction.Normalize();
+		direction.Z = 0;
 		SetActorRotation(direction.Rotation());
 	}
 }
