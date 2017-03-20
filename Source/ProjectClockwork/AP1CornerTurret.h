@@ -33,7 +33,7 @@ public:
 		float lifeTime = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Turrets")
-		TSubclassOf<class ATurret> turretBlueprint;
+		TSubclassOf<class AActor> turretBlueprint;
 
 	UPROPERTY(EditAnywhere, Category = "Turrets")
 		TArray<FVector> positions;
@@ -47,7 +47,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Pickup")
 		FVector ammoLocation;
 
-	TArray<class ATurret*> turrets;
+	TArray<class AActor*> turrets;
+
+	class ADoomFurnace* boss;
 
 	float age;
 };

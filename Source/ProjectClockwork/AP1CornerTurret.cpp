@@ -3,6 +3,7 @@
 #include "ProjectClockwork.h"
 #include "AP1CornerTurret.h"
 #include "Turret.h"
+#include "DoomFurnace.h"
 
 // Sets default values
 AAP1CornerTurret::AAP1CornerTurret()
@@ -35,7 +36,7 @@ void AAP1CornerTurret::beginAttack() {
 	UWorld* world = GetWorld();									//Spawn one turret for each position and store a reference to each
 	if (world) {
 		for (int i = 0; i < positions.Num(); i++) {
-			ATurret * turret = world->SpawnActor<ATurret>(turretBlueprint, positions[i], GetActorRotation());
+			AActor * turret = world->SpawnActor<AActor>(turretBlueprint, positions[i], GetActorRotation());
 			turrets.Add(turret);
 		}
 	}
@@ -54,5 +55,10 @@ void AAP1CornerTurret::endAttack() {							//Delete all spawned turrets
 			world->SpawnActor<AAmmoPickup>(pickupBlueprint, ammoLocation, GetActorRotation());
 		}
 	}
+
+	TArray<AActor*> getBoss;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADoomFurnace::StaticClass(), getBoss);
+	boss = Cast<class ADoomFurnace>(getBoss[0]);
+	boss->chooseAttack();
 	Destroy();
 }

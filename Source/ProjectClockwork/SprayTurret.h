@@ -3,17 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "PlayerCharacter.h"
-#include "Turret.generated.h"
+#include "SprayTurret.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API ATurret : public AActor
+class PROJECTCLOCKWORK_API ASprayTurret : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATurret();
+	ASprayTurret();
 
 protected:
 	// Called when the game starts or when spawned
@@ -21,25 +20,29 @@ protected:
 
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	void Tick(float DeltaTime);
 
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<class ABullet> BulletBlueprint;
-
+	void aim();
+	
 	void shoot(FVector dir);
 
 	FVector direction = { 0, 0, 0 };
 
 	float shootingTimer = 0;
 
-	void aim();
+	UPROPERTY(EditAnywhere)
+		float randSpeedMax;
 
 	UPROPERTY(EditAnywhere)
-		AActor* target;
-
+		float randSpeedMin;
+	
 	UPROPERTY(EditAnywhere)
 		float fireRate = 1;
 
 	UPROPERTY(EditAnywhere)
 		float projectileSpeed = 300;
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class ABullet> BulletBlueprint;
+
 };
