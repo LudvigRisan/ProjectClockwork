@@ -147,7 +147,7 @@ void APlayerCharacter::rollMove(float deltaTime) {
 	if (rollingTimer >= rollTime) {												//stopp rolling
 		rolling = false;
 		rollingTimer = 0;
-	} else if (rollingTimer >= rollInvulTime && invulnerable) {					//Stop the invulnerability towards the end of the roll
+	} else if (rollingTimer >= rollInvulTime && invulnerable && !damaged) {					//Stop the invulnerability towards the end of the roll
 		invulnerable = false;
 
 		rollingTimer += deltaTime;
