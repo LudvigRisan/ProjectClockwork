@@ -39,6 +39,11 @@ void APlayerBullet::Tick( float DeltaTime )
 		APlayerBullet::move(DeltaTime);
 	}
 
+	age += DeltaTime;
+	if (age >= lifespan) {
+		Destroy();
+	}
+
 }
 
 void APlayerBullet::launch(FVector direction) {

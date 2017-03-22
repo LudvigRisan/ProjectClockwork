@@ -3,6 +3,7 @@
 #include "ProjectClockwork.h"
 #include "DoomFurnace.h"
 
+#include "AttackPattern.h"
 
 // Sets default values
 ADoomFurnace::ADoomFurnace() {
@@ -17,6 +18,7 @@ void ADoomFurnace::BeginPlay() {
 
 	health = MaxHealth;
 
+	ADoomFurnace::chooseAttack();
 }
 
 // Called every frame
@@ -26,14 +28,45 @@ void ADoomFurnace::Tick(float DeltaTime) {
 }
 
 void ADoomFurnace::chooseAttack() {
-	if (health > stageTwoLimit) {
+	if (health < stageTwoLimit) {
 		bool randomCheck = false;
-		do {
+		while (!randomCheck) {
 			int32 randomselect = rand() % stageOneAttacks.Num();
-		} while (!randomCheck);
-	} else if (health > stageThreeLimit) {
-
+			if (randomselect != lastAttack) {
+				randomCheck = true;
+				lastAttack = randomselect;
+				UWorld* world = GetWorld();
+				if (world) {
+					world->SpawnActor<AAttackPattern>(stageOneAttacks[randomselect], GetActorLocation(), GetActorRotation());
+				}
+			}
+		}
+	} else if (health < stageThreeLimit) {
+		bool randomCheck = false;
+		while (!randomCheck) {
+			int32 randomselect = rand() % stageTwoAttacks.Num();
+			if (randomselect != lastAttack) {
+				randomCheck = true;
+				lastAttack = randomselect;
+				UWorld* world = GetWorld();
+				if (world) {
+					world->SpawnActor<AAttackPattern>(stageTwoAttacks[randomselect], GetActorLocation(), GetActorRotation());
+				}
+			}
+		}
 	} else {
+		bool randomCheck = false;
+		while (!randomCheck) {
+			int32 randomselect = rand() % stageThreeAttacks.Num();
+			if (randomselect != lastAttack) {
+				randomCheck = true;
+				lastAttack = randomselect;
+				UWorld* world = GetWorld();
+				if (world) {
+					world->SpawnActor<AAttackPattern>(stageThreeAttacks[randomselect], GetActorLocation(), GetActorRotation());
+				}
+			}
+		}
 
 	}
 }

@@ -26,23 +26,23 @@ public:
 		float MaxHealth = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
-		TArray<class AAttackPattern*> stageOneAttacks;
+		TArray<TSubclassOf<class AAttackPattern>> stageOneAttacks;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
 		float stageTwoLimit = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
-		TArray<class AAttackPattern*> stageTwoAttacks;
+		TArray<TSubclassOf<class AAttackPattern>> stageTwoAttacks;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
 		float stageThreeLimit = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
-		TArray<class AAttackPattern*> stageThreeAttacks;
+		TArray<TSubclassOf<class AAttackPattern>> stageThreeAttacks;
 
 	float health = 99999999;
 
-	int32 lastAttack = 0;
+	int32 lastAttack = 500;
 
 	void chooseAttack();
 
