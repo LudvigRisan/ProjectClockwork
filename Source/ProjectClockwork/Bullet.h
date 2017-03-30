@@ -31,7 +31,7 @@ public:
 	UShapeComponent* CollisionBox = nullptr;
 	
 	float killtimer = 0;
-	float lifespan = 7; 
+	float lifespan = 20; 
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
