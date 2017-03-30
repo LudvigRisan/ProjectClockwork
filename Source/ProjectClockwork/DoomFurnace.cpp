@@ -18,6 +18,8 @@ void ADoomFurnace::BeginPlay() {
 
 	health = MaxHealth;
 
+	healthlink->updateHealth(health);
+
 	ADoomFurnace::chooseAttack();
 }
 
@@ -28,7 +30,7 @@ void ADoomFurnace::Tick(float DeltaTime) {
 }
 
 void ADoomFurnace::chooseAttack() {
-	if (health < stageTwoLimit) {
+	if (health > stageTwoLimit) {
 		bool randomCheck = false;
 		while (!randomCheck) {
 			int32 randomselect = rand() % stageOneAttacks.Num();
@@ -41,7 +43,7 @@ void ADoomFurnace::chooseAttack() {
 				}
 			}
 		}
-	} else if (health < stageThreeLimit) {
+	} else if (health > stageThreeLimit) {
 		bool randomCheck = false;
 		while (!randomCheck) {
 			int32 randomselect = rand() % stageTwoAttacks.Num();
@@ -73,6 +75,7 @@ void ADoomFurnace::chooseAttack() {
 
 void ADoomFurnace::damage(float amount) {
 	health -= amount;
+	healthlink->updateHealth(health);
 	if (health <= 0) {
 		diePlease();
 	}
