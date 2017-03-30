@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "BossHealthLink.h"
 #include "DoomFurnace.generated.h"
 
 UCLASS()
@@ -43,6 +44,9 @@ public:
 	float health = 99999999;
 
 	int32 lastAttack = 500;
+
+	UPROPERTY(EditAnywhere)
+		ABossHealthLink * healthlink;
 
 	void chooseAttack();
 
