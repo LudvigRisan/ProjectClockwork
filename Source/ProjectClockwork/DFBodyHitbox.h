@@ -26,7 +26,7 @@ public:
 
 	virtual void shoot() override;
 
-	virtual void other(float amount) override;
+	virtual bool other(float amount) override;
 
 	UPROPERTY(EditAnywhere)
 		float damageAmountShoot;

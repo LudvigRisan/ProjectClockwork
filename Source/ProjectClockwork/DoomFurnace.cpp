@@ -75,7 +75,7 @@ void ADoomFurnace::chooseAttack() {
 
 void ADoomFurnace::damage(float amount) {
 	health -= amount;
-	healthlink->updateHealth(health);
+	healthlink->updateHealth(health/MaxHealth);
 	if (health <= 0) {
 		diePlease();
 	}
