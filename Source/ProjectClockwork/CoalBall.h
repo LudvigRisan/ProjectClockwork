@@ -42,6 +42,5 @@ public:
 
 
 	UFUNCTION()
-		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
-			UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+		void OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector NormalImpulse, const FHitResult& Hit);
 };

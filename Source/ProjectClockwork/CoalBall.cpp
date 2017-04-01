@@ -9,6 +9,8 @@
 // Sets default values
 ACoalBall::ACoalBall()
 {
+
+	
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -25,13 +27,9 @@ void ACoalBall::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerCharacter::StaticClass(), getplayer);
 	player = Cast<APlayerCharacter>(getplayer[0]);
 
-	CollisionBox = this->FindComponentByClass<USphereComponent>();		//For collision
-
-	if (CollisionBox) {
-		CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACoalBall::OnOverlap);
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("I need a collider you lazy bum!"));
-	}
+	
+	OnActorHit.AddDynamic(this, &ACoalBall::OnOverlap);
+	
 }
 
 // Called every frame
@@ -58,13 +56,15 @@ void ACoalBall::move(float DeltaTime) {
 		FVector moveForce = player->GetActorLocation() - GetActorLocation();
 		moveForce.Normalize();
 		moveForce = moveForce * speed * DeltaTime;
+		moveForce.Z = 0;
 
-		LaunchPawn(moveForce, true, true);
+		UMeshComponent* mover = Cast<UMeshComponent>(RootComponent);
+		mover->AddImpulse(moveForce);
 	}
 }
 
-void ACoalBall::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
-	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
+void ACoalBall::OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector NormalImpulse, const FHitResult& Hit) {
+	UE_LOG(LogTemp, Warning, TEXT("BOING!"));
 	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {
 		if (player->damage()) {
 			ACoalBall::end();
