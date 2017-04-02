@@ -7,7 +7,7 @@
 #include "AmmoPickup.h"
 #include "AP1PlacedObjects.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FObjectGroup {
 
 	GENERATED_USTRUCT_BODY()

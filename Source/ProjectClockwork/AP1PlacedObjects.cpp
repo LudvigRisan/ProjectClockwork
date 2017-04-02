@@ -25,6 +25,10 @@ void AAP1PlacedObjects::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	age += DeltaTime;											//Lifespan timer
+	if (age > lifeTime) {
+		AAP1PlacedObjects::endAttack();
+	}
 }
 
 void AAP1PlacedObjects::beginAttack() {
