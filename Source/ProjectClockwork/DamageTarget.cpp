@@ -34,6 +34,6 @@ void ADamageTarget::hit() {
 
 }
 
-void ADamageTarget::other(float amount) {
-
+bool ADamageTarget::other(float amount) {
+	return false;
 }
