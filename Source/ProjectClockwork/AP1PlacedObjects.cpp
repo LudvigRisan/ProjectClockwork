@@ -17,7 +17,7 @@ AAP1PlacedObjects::AAP1PlacedObjects()
 void AAP1PlacedObjects::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	AAP1PlacedObjects::beginAttack();
 }
 
 // Called every frame
