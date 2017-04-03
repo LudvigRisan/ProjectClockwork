@@ -40,6 +40,8 @@ public:
 	UPROPERTY(EditAnywhere)
 		float damage;
 
+	UPROPERTY(EditAnywhere)
+		bool endAttack = true;
 
 	UFUNCTION()
 		void OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector NormalImpulse, const FHitResult& Hit);

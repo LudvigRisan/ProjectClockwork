@@ -80,13 +80,14 @@ void ACoalBall::OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector Norma
 }
 
 void ACoalBall::end() {
-	TArray<AActor*> getpattern;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAttackPattern::StaticClass(), getpattern);
-	AAttackPattern* pattern = Cast<AAttackPattern>(getpattern[0]);
+	if (endAttack) {
+		TArray<AActor*> getpattern;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAttackPattern::StaticClass(), getpattern);
+		AAttackPattern* pattern = Cast<AAttackPattern>(getpattern[0]);
 
-	if (pattern) {
-		pattern->endAttack();
+		if (pattern) {
+			pattern->endAttack();
+		}
 	}
-
 	Destroy();
 }
