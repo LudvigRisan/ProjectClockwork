@@ -106,7 +106,7 @@ void ACoalBall::fire() {
 	FVector fireMove = {sinf(dir) * force, cosf(dir) * force, 0};
 	UWorld* world = GetWorld();
 	if (world) {
-		ABullet* bullet = world->SpawnActor<ABullet>(Blueprint, GetActorLocation(), fireMove.Rotation());
+		ABullet* bullet = world->SpawnActor<ABullet>(Blueprint, GetActorLocation() + fireOffset, fireMove.Rotation());
 		if (bullet) {
 			bullet->launch(fireMove);
 		}

@@ -42,4 +42,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float projectileSpeed = 300;
+
+	UPROPERTY(EditAnywhere)
+		FVector bulletOffset;
 };

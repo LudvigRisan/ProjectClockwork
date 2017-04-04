@@ -56,6 +56,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Flame")
 		float fireSpread = 1;
+	
+	UPROPERTY(EditAnywhere, Category = "Flame")
+		FVector fireOffset;
 
 	UPROPERTY(EditAnywhere, Category = "Flame")
 		TSubclassOf<ABullet> Blueprint;
