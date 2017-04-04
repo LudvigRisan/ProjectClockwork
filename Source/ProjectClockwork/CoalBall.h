@@ -4,6 +4,7 @@
 
 #include "GameFramework/Pawn.h"
 #include "PlayerCharacter.h"
+#include "Bullet.h"
 #include "CoalBall.generated.h"
 
 UCLASS()
@@ -28,11 +29,15 @@ public:
 
 	void move(float DeltaTime);
 
+	void fire();
+
 	void end();
 	
 	APlayerCharacter * player = nullptr;
 
 	UShapeComponent * CollisionBox = nullptr;
+
+	float fireTimer = 0;
 	
 	UPROPERTY(EditAnywhere)
 		float speed;
@@ -42,6 +47,18 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		bool endAttack = true;
+
+	UPROPERTY(EditAnywhere, Category = "Flame")
+		bool burning = false;
+
+	UPROPERTY(EditAnywhere, Category = "Flame")
+		float fireAmount = 1;
+
+	UPROPERTY(EditAnywhere, Category = "Flame")
+		float fireSpread = 1;
+
+	UPROPERTY(EditAnywhere, Category = "Flame")
+		TSubclassOf<ABullet> Blueprint;
 
 	UFUNCTION()
 		void OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector NormalImpulse, const FHitResult& Hit);

@@ -37,6 +37,15 @@ void ACoalBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(burning) {
+		fireTimer += DeltaTime;
+		if (fireTimer >= 1 / fireAmount) {
+			UE_LOG(LogTemp, Warning, TEXT("%f"), fireAmount);
+			ACoalBall::fire();
+			fireTimer = 0;
+		}
+	}
+
 	ACoalBall::move(DeltaTime);
 
 	if (GetActorLocation().Z <= -100) {
@@ -64,7 +73,6 @@ void ACoalBall::move(float DeltaTime) {
 }
 
 void ACoalBall::OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector NormalImpulse, const FHitResult& Hit) {
-	UE_LOG(LogTemp, Warning, TEXT("BOING!"));
 	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {
 		if (player->damage()) {
 			ACoalBall::end();
@@ -90,4 +98,17 @@ void ACoalBall::end() {
 		}
 	}
 	Destroy();
+}
+
+void ACoalBall::fire() {
+	float dir = FMath::FRandRange(0, 360);
+	float force = FMath::FRandRange(0, fireSpread);
+	FVector fireMove = {sinf(dir) * force, cosf(dir) * force, 0};
+	UWorld* world = GetWorld();
+	if (world) {
+		ABullet* bullet = world->SpawnActor<ABullet>(Blueprint, GetActorLocation(), fireMove.Rotation());
+		if (bullet) {
+			bullet->launch(fireMove);
+		}
+	}
 }

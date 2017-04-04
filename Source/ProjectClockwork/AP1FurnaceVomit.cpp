@@ -63,12 +63,12 @@ void AAP1FurnaceVomit::endAttack() {
 
 void AAP1FurnaceVomit::aim(float DeltaTime) {
 	if (waveDir) {
-		wave += waveSpeed * DeltaTime;
+		wave += waveSpeed;
 		if (wave >= waveOrigin + waveWidth) {
 			waveDir = false;
 		}
 	} else {
-		wave -= waveSpeed * DeltaTime;
+		wave -= waveSpeed;
 		if (wave <= waveOrigin - waveWidth) {
 			waveDir = true;
 		}
