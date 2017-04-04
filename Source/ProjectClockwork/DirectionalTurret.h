@@ -3,18 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "DamageTarget.h"
-#include "DoomFurnace.h"
-#include "DFBodyHitbox.generated.h"
+#include "DirectionalTurret.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API ADFBodyHitbox : public ADamageTarget
+class PROJECTCLOCKWORK_API ADirectionalTurret : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ADFBodyHitbox();
+	ADirectionalTurret();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,16 +22,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void shoot() override;
 
-	virtual bool other(float amount) override;
 
-	UPROPERTY(EditAnywhere)
-		float damageAmountShoot;
+	void shoot(FVector dir);
 
 	UPROPERTY(EditAnywhere)
-		float damageMultiplierOther;
+		TSubclassOf<class ABullet> BulletBlueprint;
 	
-	ADoomFurnace* boss;
+	UPROPERTY(EditAnywhere)
+		float fireRate = 1;
 
+	UPROPERTY(EditAnywhere)
+		float projectileSpeed = 300;
+
+	UPROPERTY(EditAnywhere)
+		TArray<FVector> direction;
+
+	float shootingTimer = 0;
 };

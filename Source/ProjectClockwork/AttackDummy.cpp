@@ -34,6 +34,7 @@ void AAttackDummy::hit() {
 	UE_LOG(LogTemp, Warning, TEXT("SLASH!"));
 }
 
-void AAttackDummy::other(float amount) {
+bool AAttackDummy::other(float amount) {
 	UE_LOG(LogTemp, Warning, TEXT("Damaged: %f!"), amount);
+	return true;
 }

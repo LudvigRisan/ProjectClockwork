@@ -3,16 +3,17 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "DamageTarget.generated.h"
+#include "AttackPattern.h"
+#include "AP1CoalBall.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API ADamageTarget : public AActor
+class PROJECTCLOCKWORK_API AAP1CoalBall : public AAttackPattern
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ADamageTarget();
+	AAP1CoalBall();
 
 protected:
 	// Called when the game starts or when spawned
@@ -20,12 +21,18 @@ protected:
 
 public:	
 	// Called every frame
+
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void shoot();
+	virtual void beginAttack() override;
 
-	virtual void hit();
+	virtual void endAttack() override;
 
-	virtual bool other(float amount);
-	
+	UPROPERTY(EditAnywhere)
+		FVector StartLocation;
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AActor> actor;
+
+
 };
