@@ -16,7 +16,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Turrets")
 		TSubclassOf<class AActor> blueprint;
 	
-	UPROPERTY(EditAnywhere, Category = "Turrets")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turrets")
 		TArray<FVector> locations;
 };
 
