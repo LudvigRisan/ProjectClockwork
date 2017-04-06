@@ -27,9 +27,23 @@ void ADoomFurnace::BeginPlay() {
 void ADoomFurnace::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+
+	if (loadAttack) {
+		attackTimer += DeltaTime;
+		if (attackTimer >= attackDelay) {
+			loadAttack = false;
+			ADoomFurnace::startAttack();
+			
+		}
+	}
 }
 
 void ADoomFurnace::chooseAttack() {
+	attackTimer = 0;
+	loadAttack = true;
+}
+
+void ADoomFurnace::startAttack() {
 	if (health > stageTwoLimit) {
 		bool randomCheck = false;
 		while (!randomCheck) {
