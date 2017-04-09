@@ -33,9 +33,14 @@ public:
 	float rollingTimer = 0;
 	float InvulTimer = 0;
 
+	
+
 	bool invulnerable = false;
 	bool rolling = false;
 	bool damaged = false;
+
+	UPROPERTY(BlueprintReadWrite)
+		FRotator mouseRot;
 
 	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float speed = 1;

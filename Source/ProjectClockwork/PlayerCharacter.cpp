@@ -109,7 +109,7 @@ void APlayerCharacter::trackMouse() {
 
 void APlayerCharacter::pointToMouse() {											//Currently rotating the object to mouse, will change this later as rotation should be decided by movement
 	FVector mouseDist = {cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0};
-	FRotator mouseRot = mouseDist.Rotation();
+	mouseRot = mouseDist.Rotation();
 	SetActorRotation(mouseRot.Quaternion());
 }
 
