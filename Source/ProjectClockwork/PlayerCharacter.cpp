@@ -4,6 +4,7 @@
 #include "PlayerCharacter.h"
 
 #include "PlayerBullet.h"
+#include "DamageTarget.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -33,6 +34,15 @@ void APlayerCharacter::BeginPlay()
 
 		UE_LOG(LogTemp, Warning, TEXT("Missing playercontroller"));	
 
+	}
+
+	AttackBox = this->FindComponentByClass<USphereComponent>();		//For collision
+
+	if (AttackBox) {
+		AttackBox->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::hitDetect);
+		AttackBox->SetActive(false);
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("I need a collider you lazy bum!"));
 	}
 }
 
@@ -186,5 +196,24 @@ void APlayerCharacter::shoot() {
 }
 
 void APlayerCharacter::hit() {
+	if (AttackBox) {
+		AttackBox->SetActive(true);
+	}
+}
+
+void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
+	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
 	UE_LOG(LogTemp, Warning, TEXT("Swing!"));
+	if (OtherActor->IsA(ADamageTarget::StaticClass())) {
+		
+		ADamageTarget * hit = Cast<ADamageTarget>(OtherActor);
+		hit->hit();
+		APlayerCharacter::endHit();
+	}
+}
+
+void APlayerCharacter::endHit() {
+	if (AttackBox) {
+		//AttackBox->SetCollisionEnabled();
+	}
 }
