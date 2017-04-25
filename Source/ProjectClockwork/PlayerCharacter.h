@@ -33,7 +33,7 @@ public:
 	float rollingTimer = 0;
 	float InvulTimer = 0;
 
-	
+	UShapeComponent* AttackBox = nullptr;
 
 	bool invulnerable = false;
 	bool rolling = false;
@@ -92,4 +92,10 @@ public:
 	void shoot();
 
 	void hit();
+
+	void endHit();
+
+	UFUNCTION()
+		void hitDetect(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
+		UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 };
