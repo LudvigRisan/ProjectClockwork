@@ -36,7 +36,11 @@ public:
 	UShapeComponent* AttackBox = nullptr;
 
 	bool invulnerable = false;
-	bool rolling = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool rolling = false;
+
+
 	bool damaged = false;
 
 	UPROPERTY(BlueprintReadWrite)
