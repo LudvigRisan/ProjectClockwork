@@ -28,14 +28,14 @@ void AAP1FurnaceVomit::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (ready) {
-		shootingTimer += DeltaTime;															//Shoot multiple bullets per frame depending on firerate
+		shootingTimer += DeltaTime;
 		for (shootingTimer; shootingTimer >= 1 / fireRate; shootingTimer -= 1/fireRate) {
 			AAP1FurnaceVomit::aim(DeltaTime);
 			AAP1FurnaceVomit::shoot(direction);
 		}
 	}
 
-	age += DeltaTime;																		//SelfdestructTimer
+	age += DeltaTime;
 	if (age >= lifeTime) {
 		AAP1FurnaceVomit::endAttack();
 	}
@@ -49,20 +49,20 @@ void AAP1FurnaceVomit::beginAttack() {
 
 	FVector loc = {boss->GetActorLocation().X, boss->GetActorLocation().Y, 150 };
 
-	SetActorLocation(loc);																	//move to the boss
+	SetActorLocation(loc);
 
-	wave = waveOrigin;																		//set the wave direction to its starting position
+	wave = waveOrigin;
 
 	ready = true;
 }
 
-void AAP1FurnaceVomit::endAttack() {														//get the boss to start its next attack
+void AAP1FurnaceVomit::endAttack() {
 	boss->chooseAttack();
 	Destroy();
 }
 
 void AAP1FurnaceVomit::aim(float DeltaTime) {
-	if (waveDir) {																			//Decide the direction it will rotate
+	if (waveDir) {
 		wave += waveSpeed;
 		if (wave >= waveOrigin + waveWidth) {
 			waveDir = false;

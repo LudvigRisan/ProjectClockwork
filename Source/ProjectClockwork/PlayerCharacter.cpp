@@ -195,7 +195,7 @@ void APlayerCharacter::shoot() {
 	}
 }
 
-void APlayerCharacter::hit() {													//Function for starting mele attack
+void APlayerCharacter::hit() {
 	if (AttackBox) {
 		AttackBox->SetActive(true);
 	}
@@ -203,7 +203,7 @@ void APlayerCharacter::hit() {													//Function for starting mele attack
 
 void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
-	UE_LOG(LogTemp, Warning, TEXT("Swing!"));									//Detection for when the mele attack hits
+	UE_LOG(LogTemp, Warning, TEXT("Swing!"));
 	if (OtherActor->IsA(ADamageTarget::StaticClass())) {
 		
 		ADamageTarget * hit = Cast<ADamageTarget>(OtherActor);
@@ -212,7 +212,7 @@ void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActo
 	}
 }
 
-void APlayerCharacter::endHit() {												//Finish the mele attack
+void APlayerCharacter::endHit() {
 	if (AttackBox) {
 		//AttackBox->SetCollisionEnabled();
 	}

@@ -46,13 +46,13 @@ void ABullet::Tick( float DeltaTime )
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
-	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {				//Damage player on hitting
+	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {
 		APlayerCharacter * thePlayer = Cast<APlayerCharacter>(OtherActor);
 
-		if (thePlayer->damage()) {										//Self destruct if it's able to damage the player
+		if (thePlayer->damage()) {
 			Destroy();
 		}
-	}																	//destroy on hit if it's had enough time to be launched, ignore other bullets
+	}
 	else if (killtimer >= 0.1f && !OtherActor->IsA(ABullet::StaticClass())) {
 		Destroy();
 	}
