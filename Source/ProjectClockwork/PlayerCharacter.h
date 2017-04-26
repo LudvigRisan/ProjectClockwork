@@ -32,10 +32,12 @@ public:
 	float yIn = 0;
 	float rollingTimer = 0;
 	float InvulTimer = 0;
+	float meleTimer = 0;
 
 	UShapeComponent* AttackBox = nullptr;
 
 	bool invulnerable = false;
+	bool attacking = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool rolling = false;
@@ -63,6 +65,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Life")
 		float damageInvulTime = 1;
+
+	UPROPERTY(EditAnywhere)
+		float meleTime = 1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 	    bool ammo = true;

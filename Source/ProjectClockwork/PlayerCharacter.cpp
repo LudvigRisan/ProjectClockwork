@@ -40,7 +40,7 @@ void APlayerCharacter::BeginPlay()
 
 	if (AttackBox) {
 		AttackBox->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::hitDetect);
-		AttackBox->SetActive(false);
+		AttackBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	} else {
 		UE_LOG(LogTemp, Warning, TEXT("I need a collider you lazy bum!"));
 	}
@@ -55,7 +55,7 @@ void APlayerCharacter::Tick( float DeltaTime )
 		APlayerCharacter::rollMove(DeltaTime);
 	} else {
 		APlayerCharacter::move(DeltaTime);
-		APlayerCharacter::pointToMouse();
+		APlayerCharacter::trackMouse();
 	}
 
 	if (damaged) {																//invulnerable on taking damage
@@ -67,14 +67,22 @@ void APlayerCharacter::Tick( float DeltaTime )
 		}
 	}
 
+	if (attacking) {
+		meleTimer += DeltaTime;
+		if (meleTimer >= meleTime) {
+			APlayerCharacter::endHit();
+			meleTimer = 0;
+		}
+	}
+
 	if (GetActorLocation().Z <= 0) {											//Respawn on fall of stage, will add a uproperty variable for
 		SetActorLocation(originLocation);										//fall of limit
 		APlayerCharacter::damage();
 	}
 
-	APlayerCharacter::trackMouse();
+	
 
-
+	APlayerCharacter::pointToMouse();
 
 }
 
@@ -198,7 +206,8 @@ void APlayerCharacter::shoot() {
 
 void APlayerCharacter::hit() {													//Function for starting mele attack
 	if (AttackBox) {
-		AttackBox->SetActive(true);
+		AttackBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		attacking = true;
 	}
 }
 
@@ -215,6 +224,7 @@ void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActo
 
 void APlayerCharacter::endHit() {												//Finish the mele attack
 	if (AttackBox) {
-		//AttackBox->SetCollisionEnabled();
+		AttackBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		attacking = false;
 	}
 }
