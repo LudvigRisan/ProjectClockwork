@@ -37,6 +37,8 @@ public:
 	UShapeComponent* AttackBox = nullptr;
 
 	bool invulnerable = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool attacking = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
