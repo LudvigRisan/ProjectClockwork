@@ -32,10 +32,23 @@ public:
 	float yIn = 0;
 	float rollingTimer = 0;
 	float InvulTimer = 0;
+	float meleTimer = 0;
+
+	UShapeComponent* AttackBox = nullptr;
 
 	bool invulnerable = false;
-	bool rolling = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool attacking = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool rolling = false;
+
+
 	bool damaged = false;
+
+	UPROPERTY(BlueprintReadWrite)
+		FRotator mouseRot;
 
 	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
 		float speed = 1;
@@ -54,6 +67,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Life")
 		float damageInvulTime = 1;
+
+	UPROPERTY(EditAnywhere)
+		float meleTime = 1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 	    bool ammo = true;
@@ -87,4 +103,10 @@ public:
 	void shoot();
 
 	void hit();
+
+	void endHit();
+
+	UFUNCTION()
+		void hitDetect(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
+		UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 };

@@ -27,6 +27,6 @@ public:
 
 	virtual void hit() override;
 
-	virtual void other(float amount) override;
+	virtual bool other(float amount) override;
 	
 };

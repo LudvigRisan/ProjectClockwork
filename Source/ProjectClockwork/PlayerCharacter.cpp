@@ -4,6 +4,7 @@
 #include "PlayerCharacter.h"
 
 #include "PlayerBullet.h"
+#include "DamageTarget.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -34,6 +35,15 @@ void APlayerCharacter::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Missing playercontroller"));	
 
 	}
+
+	AttackBox = this->FindComponentByClass<USphereComponent>();		//For collision
+
+	if (AttackBox) {
+		AttackBox->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::hitDetect);
+		AttackBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("I need a collider you lazy bum!"));
+	}
 }
 
 // Called every frame
@@ -45,6 +55,7 @@ void APlayerCharacter::Tick( float DeltaTime )
 		APlayerCharacter::rollMove(DeltaTime);
 	} else {
 		APlayerCharacter::move(DeltaTime);
+		APlayerCharacter::trackMouse();
 	}
 
 	if (damaged) {																//invulnerable on taking damage
@@ -56,12 +67,20 @@ void APlayerCharacter::Tick( float DeltaTime )
 		}
 	}
 
+	if (attacking) {
+		meleTimer += DeltaTime;
+		if (meleTimer >= meleTime) {
+			APlayerCharacter::endHit();
+			meleTimer = 0;
+		}
+	}
+
 	if (GetActorLocation().Z <= 0) {											//Respawn on fall of stage, will add a uproperty variable for
 		SetActorLocation(originLocation);										//fall of limit
 		APlayerCharacter::damage();
 	}
 
-	APlayerCharacter::trackMouse();
+	
 
 	APlayerCharacter::pointToMouse();
 
@@ -109,7 +128,7 @@ void APlayerCharacter::trackMouse() {
 
 void APlayerCharacter::pointToMouse() {											//Currently rotating the object to mouse, will change this later as rotation should be decided by movement
 	FVector mouseDist = {cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0};
-	FRotator mouseRot = mouseDist.Rotation();
+	mouseRot = mouseDist.Rotation();
 	SetActorRotation(mouseRot.Quaternion());
 }
 
@@ -185,6 +204,27 @@ void APlayerCharacter::shoot() {
 	}
 }
 
-void APlayerCharacter::hit() {
-	UE_LOG(LogTemp, Warning, TEXT("Swing!"));
+void APlayerCharacter::hit() {													//Function for starting mele attack
+	if (AttackBox) {
+		AttackBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		attacking = true;
+	}
+}
+
+void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
+	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
+	UE_LOG(LogTemp, Warning, TEXT("Swing!"));									//Detection for when the mele attack hits
+	if (OtherActor->IsA(ADamageTarget::StaticClass())) {
+		
+		ADamageTarget * hit = Cast<ADamageTarget>(OtherActor);
+		hit->hit();
+		APlayerCharacter::endHit();
+	}
+}
+
+void APlayerCharacter::endHit() {												//Finish the mele attack
+	if (AttackBox) {
+		AttackBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		attacking = false;
+	}
 }

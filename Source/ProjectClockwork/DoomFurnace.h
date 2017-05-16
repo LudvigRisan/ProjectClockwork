@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "BossHealthLink.h"
 #include "DoomFurnace.generated.h"
 
 UCLASS()
@@ -26,6 +27,9 @@ public:
 		float MaxHealth = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
+		float attackDelay = 1;
+
+	UPROPERTY(EditAnywhere, Category = "Attacks")
 		TArray<TSubclassOf<class AAttackPattern>> stageOneAttacks;
 
 	UPROPERTY(EditAnywhere, Category = "Attacks")
@@ -42,11 +46,20 @@ public:
 
 	float health = 99999999;
 
+	float attackTimer = 0;
+
 	int32 lastAttack = 500;
+
+	bool loadAttack = false;
+
+	UPROPERTY(EditAnywhere)
+		ABossHealthLink * healthlink;
 
 	void chooseAttack();
 
 	void damage(float amount);
+
+	void startAttack();
 
 	void diePlease();
 };

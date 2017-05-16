@@ -26,6 +26,6 @@ public:
 
 	virtual void hit();
 
-	virtual void other(float amount);
+	virtual bool other(float amount);
 	
 };

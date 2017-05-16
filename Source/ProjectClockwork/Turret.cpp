@@ -44,7 +44,7 @@ void ATurret::Tick(float DeltaTime)
 void ATurret::shoot(FVector dir) {
 		UWorld* world = GetWorld();
 		if (world) {
-			ABullet* bullet = world->SpawnActor<ABullet>(BulletBlueprint, GetActorLocation(), dir.Rotation());
+			ABullet* bullet = world->SpawnActor<ABullet>(BulletBlueprint, GetActorLocation() + GetActorRotation().RotateVector(bulletOffset), dir.Rotation());
 			if (bullet) {
 				bullet->launch(dir * projectileSpeed);
 			}

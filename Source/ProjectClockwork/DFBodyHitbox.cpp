@@ -37,8 +37,11 @@ void ADFBodyHitbox::shoot() {
 	}
 }
 
-void ADFBodyHitbox::other(float amount) {
+bool ADFBodyHitbox::other(float amount) {
 	if (boss) {
 		boss->damage(amount * damageMultiplierOther);
+		return true;
+	} else {
+		return false;
 	}
 }
