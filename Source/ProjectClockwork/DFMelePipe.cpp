@@ -20,6 +20,10 @@ void ADFMelePipe::BeginPlay()
 	TArray<AActor*> getBoss;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADoomFurnace::StaticClass(), getBoss);
 	boss = Cast<class ADoomFurnace>(getBoss[0]);
+
+	TArray<AActor*> getHealth;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABossHealthLink::StaticClass(), getHealth);
+	health = Cast<class ABossHealthLink>(getHealth[0]);
 	
 }
 
@@ -32,7 +36,7 @@ void ADFMelePipe::Tick(float DeltaTime)
 
 void ADFMelePipe::hit() {
 	if (boss) {
-		boss->damage(damageAmount);
+		boss->damage(damageAmount * health->bossHealth);
 		Destroy();
 	}
 }

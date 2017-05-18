@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "DamageTarget.h"
 #include "DoomFurnace.h"
+#include "BossHealthLink.h"
 #include "DFMelePipe.generated.h"
 
 UCLASS()
@@ -27,6 +28,8 @@ public:
 	virtual void hit() override;
 
 	ADoomFurnace* boss;
+
+	ABossHealthLink* health;
 
 	UPROPERTY(EditAnywhere)
 		float damageAmount;
