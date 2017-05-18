@@ -18,7 +18,7 @@ void ADoomFurnace::BeginPlay() {
 
 	health = MaxHealth;
 
-	healthlink->updateHealth(health);
+	healthlink->updateHealth(health/MaxHealth);
 
 	ADoomFurnace::chooseAttack();
 }
