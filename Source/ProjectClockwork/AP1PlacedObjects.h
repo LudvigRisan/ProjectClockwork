@@ -44,6 +44,9 @@ public:
 	virtual void endAttack() override;
 
 	UPROPERTY(EditAnywhere, Category = "Turrets")
+		bool timed = true;
+
+	UPROPERTY(EditAnywhere, Category = "Turrets")
 		float lifeTime = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Turrets")

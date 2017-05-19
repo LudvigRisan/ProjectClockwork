@@ -20,7 +20,7 @@ void AAmmoPickup::BeginPlay()
 	
 	CollisionBox = this->FindComponentByClass<USphereComponent>();		//For collision
 
-	if (CollisionBox) {
+	if (CollisionBox) {													//Set up collission event
 		CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AAmmoPickup::OnOverlap);
 	}
 	else {
@@ -38,11 +38,11 @@ void AAmmoPickup::Tick( float DeltaTime )
 
 void AAmmoPickup::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
-	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {
+	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {			//If the colliding actor is the player, pick up
 		APlayerCharacter * thePlayer = Cast<APlayerCharacter>(OtherActor);
 
 		thePlayer->ammo = true;
-		if (!infinity) {
+		if (!infinity) {											//Check if the ammo pickup is one time use only.
 			Destroy();
 		}
 	}
