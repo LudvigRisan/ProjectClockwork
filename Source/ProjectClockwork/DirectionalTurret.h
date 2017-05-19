@@ -35,8 +35,8 @@ public:
 	UPROPERTY(EditAnywhere)
 		float projectileSpeed = 300;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)							//Array of directions, one bullet will be fired per direction
 		TArray<FVector> direction;
 
-	float shootingTimer = 0;
+	float shootingTimer = 0;						//Timer to controll firerate
 };

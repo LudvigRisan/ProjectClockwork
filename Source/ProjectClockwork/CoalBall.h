@@ -29,7 +29,7 @@ public:
 
 	void move(float DeltaTime);
 
-	void fire();
+	void fire();								//Used if the coalball should leave a firetrail
 
 	void end();
 	
@@ -37,30 +37,30 @@ public:
 
 	UShapeComponent * CollisionBox = nullptr;
 
-	float fireTimer = 0;
+	float fireTimer = 0;						//Timer used to controll how often the coalball leaves fire (if enabled
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)						//The amount of force applied to the coalball each frame
 		float speed;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)						//How much the coal ball should damage the boss if it hits
 		float damage;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)						//Should the coalball stop the current attackpattern on ending?
 		bool endAttack = true;
 
-	UPROPERTY(EditAnywhere, Category = "Flame")
+	UPROPERTY(EditAnywhere, Category = "Flame")	//Should it leave a firetrail?
 		bool burning = false;
 
-	UPROPERTY(EditAnywhere, Category = "Flame")
+	UPROPERTY(EditAnywhere, Category = "Flame")	//How often should it spawn fire
 		float fireAmount = 1;
 
-	UPROPERTY(EditAnywhere, Category = "Flame")
+	UPROPERTY(EditAnywhere, Category = "Flame")	//How much should the fire spread out
 		float fireSpread = 1;
 	
-	UPROPERTY(EditAnywhere, Category = "Flame")
+	UPROPERTY(EditAnywhere, Category = "Flame")	//Where in relation to the coalball should the fire spawn
 		FVector fireOffset;
 
-	UPROPERTY(EditAnywhere, Category = "Flame")
+	UPROPERTY(EditAnywhere, Category = "Flame")	
 		TSubclassOf<ABullet> Blueprint;
 
 	UFUNCTION()

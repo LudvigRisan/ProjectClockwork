@@ -28,7 +28,7 @@ void ADirectionalTurret::Tick(float DeltaTime)
 
 	shootingTimer += DeltaTime;
 
-	if (shootingTimer > 1 / fireRate) {
+	if (shootingTimer > 1 / fireRate) {					//Fire one bullet per direction
 		shootingTimer = 0;
 		for (int32 i = 0; i < direction.Num(); i++) {
 			shoot(direction[i]);

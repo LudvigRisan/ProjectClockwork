@@ -8,7 +8,7 @@
 #include "DFBodyHitbox.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API ADFBodyHitbox : public ADamageTarget
+class PROJECTCLOCKWORK_API ADFBodyHitbox : public ADamageTarget		//Damage hitbox for the main body of the first boss
 {
 	GENERATED_BODY()
 	
@@ -28,10 +28,10 @@ public:
 
 	virtual bool other(float amount) override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)											//How much damage should be dealt when shot by the player
 		float damageAmountShoot;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)											//Multiplyer for damage dealt by other sources
 		float damageMultiplierOther;
 	
 	ADoomFurnace* boss;

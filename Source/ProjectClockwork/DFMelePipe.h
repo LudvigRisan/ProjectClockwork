@@ -29,7 +29,7 @@ public:
 
 	ADoomFurnace* boss;
 
-	ABossHealthLink* health;
+	ABossHealthLink* health;						//Used to reduce the damage taken based on the bosses remaining health
 
 	UPROPERTY(EditAnywhere)
 		float damageAmount;
