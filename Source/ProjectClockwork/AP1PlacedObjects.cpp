@@ -21,13 +21,14 @@ void AAP1PlacedObjects::BeginPlay()
 }
 
 // Called every frame
-void AAP1PlacedObjects::Tick(float DeltaTime)
-{
+void AAP1PlacedObjects::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
-	age += DeltaTime;											//Lifespan timer
-	if (age > lifeTime) {
-		AAP1PlacedObjects::endAttack();
+	if (timed) {
+		age += DeltaTime;											//Lifespan timer
+		if (age > lifeTime) {
+			AAP1PlacedObjects::endAttack();
+		}
 	}
 }
 
