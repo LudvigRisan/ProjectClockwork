@@ -34,6 +34,6 @@ void ADamageTarget::hit() {
 
 }
 
-bool ADamageTarget::other(float amount) {
+bool ADamageTarget::other(float amount) {			//Returns false to tell the damage source that nothing was damaged
 	return false;
 }

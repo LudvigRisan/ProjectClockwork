@@ -6,7 +6,7 @@
 #include "AttackPattern.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API AAttackPattern : public AActor
+class PROJECTCLOCKWORK_API AAttackPattern : public AActor				//Base class for attack patterns (Prefix AP[boss number])
 {
 	GENERATED_BODY()
 

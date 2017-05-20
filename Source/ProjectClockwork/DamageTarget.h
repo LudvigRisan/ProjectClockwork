@@ -6,7 +6,7 @@
 #include "DamageTarget.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API ADamageTarget : public AActor
+class PROJECTCLOCKWORK_API ADamageTarget : public AActor				//Base class for damageable objects (Prefix: DF)
 {
 	GENERATED_BODY()
 	
@@ -22,10 +22,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void shoot();
+	virtual void shoot();												//On getting shot by player
 
-	virtual void hit();
+	virtual void hit();													//On gettin hit by player mele attack
 
-	virtual bool other(float amount);
+	virtual bool other(float amount);									//Other damage sources
 	
 };

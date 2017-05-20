@@ -29,7 +29,7 @@ void ADoomFurnace::Tick(float DeltaTime) {
 
 
 	if (loadAttack) {
-		attackTimer += DeltaTime;
+		attackTimer += DeltaTime;										//Timer for starting the next attack
 		if (attackTimer >= attackDelay) {
 			loadAttack = false;
 			ADoomFurnace::startAttack();
@@ -44,11 +44,11 @@ void ADoomFurnace::chooseAttack() {
 }
 
 void ADoomFurnace::startAttack() {
-	if (health > stageTwoLimit) {
-		bool randomCheck = false;
+	if (health > stageTwoLimit) {										//If stage one is currently active
+		bool randomCheck = false;										//Send an attack from the stage one array
 		while (!randomCheck) {
 			int32 randomselect = rand() % stageOneAttacks.Num();
-			if (randomselect != lastAttack) {
+			if (randomselect != lastAttack) {							//Don't use the same attack twice
 				randomCheck = true;
 				lastAttack = randomselect;
 				UWorld* world = GetWorld();
@@ -57,7 +57,7 @@ void ADoomFurnace::startAttack() {
 				}
 			}
 		}
-	} else if (health > stageThreeLimit) {
+	} else if (health > stageThreeLimit) {								//Same as stage one, but for stage two
 		bool randomCheck = false;
 		while (!randomCheck) {
 			int32 randomselect = rand() % stageTwoAttacks.Num();
@@ -71,7 +71,7 @@ void ADoomFurnace::startAttack() {
 			}
 		}
 	} else {
-		bool randomCheck = false;
+		bool randomCheck = false;									//Same for stage three
 		while (!randomCheck) {
 			int32 randomselect = rand() % stageThreeAttacks.Num();
 			if (randomselect != lastAttack) {
@@ -96,5 +96,5 @@ void ADoomFurnace::damage(float amount) {
 }
 
 void ADoomFurnace::diePlease() {
-
+	UGameplayStatics::OpenLevel(GetWorld(), "Main");
 }

@@ -23,7 +23,7 @@ void ACoalBall::BeginPlay()
 	
 	
 
-	TArray<AActor*> getplayer;
+	TArray<AActor*> getplayer;													//Get pointer to the player
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerCharacter::StaticClass(), getplayer);
 	player = Cast<APlayerCharacter>(getplayer[0]);
 
@@ -40,7 +40,6 @@ void ACoalBall::Tick(float DeltaTime)
 	if(burning) {
 		fireTimer += DeltaTime;
 		if (fireTimer >= 1 / fireAmount) {
-			UE_LOG(LogTemp, Warning, TEXT("%f"), fireAmount);
 			ACoalBall::fire();
 			fireTimer = 0;
 		}
@@ -48,7 +47,7 @@ void ACoalBall::Tick(float DeltaTime)
 
 	ACoalBall::move(DeltaTime);
 
-	if (GetActorLocation().Z <= -100) {
+	if (GetActorLocation().Z <= -100) {											//End if the ball has fallen of the stage
 		ACoalBall::end();
 	}
 }
@@ -60,7 +59,7 @@ void ACoalBall::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ACoalBall::move(float DeltaTime) {
+void ACoalBall::move(float DeltaTime) {											//Push the ball towards the player, using momentum and physics to create a rubberbanding effect
 	if (player) {
 		FVector moveForce = player->GetActorLocation() - GetActorLocation();
 		moveForce.Normalize();
@@ -73,7 +72,7 @@ void ACoalBall::move(float DeltaTime) {
 }
 
 void ACoalBall::OnOverlap(AActor * SelfActor, AActor * OtherActor, FVector NormalImpulse, const FHitResult& Hit) {
-	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {
+	if (OtherActor->IsA(APlayerCharacter::StaticClass())) {						//On collission with either a valid damage target or the player: damage the target and then run end
 		if (player->damage()) {
 			ACoalBall::end();
 		}
@@ -93,14 +92,14 @@ void ACoalBall::end() {
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAttackPattern::StaticClass(), getpattern);
 		AAttackPattern* pattern = Cast<AAttackPattern>(getpattern[0]);
 
-		if (pattern) {
+		if (pattern) {															//End the current attack pattern
 			pattern->endAttack();
 		}
 	}
 	Destroy();
 }
 
-void ACoalBall::fire() {
+void ACoalBall::fire() {														//Spawn a bullet (fire) and send it moving in a random direction
 	float dir = FMath::FRandRange(0, 360);
 	float force = FMath::FRandRange(0, fireSpread);
 	FVector fireMove = {sinf(dir) * force, cosf(dir) * force, 0};
