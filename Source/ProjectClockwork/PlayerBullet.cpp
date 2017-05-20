@@ -35,7 +35,7 @@ void APlayerBullet::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	if (launched) {
+	if (launched) {										//Don't move before ready
 		APlayerBullet::move(DeltaTime);
 	}
 

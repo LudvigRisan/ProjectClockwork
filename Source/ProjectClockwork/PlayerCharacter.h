@@ -26,59 +26,59 @@ public:
 	
 	FVector cursorLocation = { 0, 0, 0 };
 	FVector rollDirection = { 0, 0, 0 };
-	FVector originLocation;
+	FVector originLocation;													//Spawn location of character, used to reset location on falling off stage
 
-	float xIn = 0;
+	float xIn = 0;															//Variable storing player input
 	float yIn = 0;
-	float rollingTimer = 0;
-	float InvulTimer = 0;
-	float meleTimer = 0;
+	float rollingTimer = 0;													//Timer used to controll rolling
+	float InvulTimer = 0;													//Timer used for invulnerability
+	float meleTimer = 0;													//Timer for mele attack
 
-	UShapeComponent* AttackBox = nullptr;
+	UShapeComponent* AttackBox = nullptr;									//Hitbox used for mele attack
 
 	bool invulnerable = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool attacking = false;
+		bool attacking = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool rolling = false;
 
 
-	bool damaged = false;
+	bool damaged = false;													//Invulnerability on taking damage
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)											//Rotataion towards the mouse
 		FRotator mouseRot;
 
-	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")					//Movement speed (Not working as intended due to built in playermovement from unreal)
 		float speed = 1;
 
-	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")					//Movement speed when rolling
 		float rollSpeed = 1;
 
-	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")					//How lon the roll movement lasts for
 		float rollTime = 1;
 
-	UPROPERTY(EditAnywhere, Category = "PlayerMovement")
+	UPROPERTY(EditAnywhere, Category = "PlayerMovement")					//How long the player is invulnerable when rolling
 		float rollInvulTime = 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
 		int health = 3;
 
-	UPROPERTY(EditAnywhere, Category = "Life")
+	UPROPERTY(EditAnywhere, Category = "Life")								//How long the player is invulnerable upon taking damage
 		float damageInvulTime = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)													//How long the mele attacks last for
 		float meleTime = 1;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")			//If the player has a bullet loaded
 	    bool ammo = true;
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class APlayerBullet> BulletBlueprint;
 
 	UPROPERTY(EditAnywhere)
-		FVector bulletOffset = { 0, 0, 0 };
+		FVector bulletOffset = { 0, 0, 0 };									//Where the bullet is
 
 	void xInput(float axis);
 
@@ -88,9 +88,9 @@ public:
 
 	void trackMouse();
 
-	void pointToMouse();
+	void pointToMouse();													//Get the rotation vlaue towards the mouse
 
-	bool damage();
+	bool damage();															//Take damage
 	
 	void die();
 

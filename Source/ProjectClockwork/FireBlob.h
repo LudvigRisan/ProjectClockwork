@@ -7,8 +7,8 @@
 #include "FireBlob.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API AFireBlob : public ABullet
-{
+class PROJECTCLOCKWORK_API AFireBlob : public ABullet						//A different version of the standard bullet
+{																			//slows down over time to create a fire efffect
 	GENERATED_BODY()
 	
 public:	

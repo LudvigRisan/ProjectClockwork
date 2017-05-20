@@ -30,7 +30,7 @@ public:
 
 	float shootingTimer = 0;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)											//Limits on how fast the bullets can move (controlling a randomizer)
 		float randSpeedMax;
 
 	UPROPERTY(EditAnywhere)
@@ -39,7 +39,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		float fireRate = 1;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)											//Base speed of bullets
 		float projectileSpeed = 300;
 
 	UPROPERTY(EditAnywhere)

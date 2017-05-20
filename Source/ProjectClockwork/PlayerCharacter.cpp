@@ -14,12 +14,12 @@ APlayerCharacter::APlayerCharacter()
 
 }
 
+
 // Called when the game starts or when spawned
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 
 	
 	originLocation = GetActorLocation();										//Origin used to respawn player on fall of stage
@@ -36,7 +36,7 @@ void APlayerCharacter::BeginPlay()
 
 	}
 
-	AttackBox = this->FindComponentByClass<USphereComponent>();		//For collision
+	AttackBox = this->FindComponentByClass<USphereComponent>();		//Used for mele attack
 
 	if (AttackBox) {
 		AttackBox->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::hitDetect);
@@ -45,6 +45,7 @@ void APlayerCharacter::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("I need a collider you lazy bum!"));
 	}
 }
+
 
 // Called every frame
 void APlayerCharacter::Tick( float DeltaTime )
@@ -86,6 +87,7 @@ void APlayerCharacter::Tick( float DeltaTime )
 
 }
 
+
 // Called to bind functionality to input
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -100,13 +102,16 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	InputComponent->BindAction("Roll", IE_Pressed, this, &APlayerCharacter::roll);
 }
 
+
 void APlayerCharacter::xInput(float axis) {
 	xIn = axis;
 }
 
+
 void APlayerCharacter::yInput(float axis) {
 	yIn = axis;
 }
+
 
 void APlayerCharacter::move(float DeltaTime) {
 
@@ -115,6 +120,7 @@ void APlayerCharacter::move(float DeltaTime) {
 
 	AddMovementInput(movement * DeltaTime * speed);
 }
+
 
 void APlayerCharacter::trackMouse() {
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))		//Set cursorLocation to where the cursor is pointing
@@ -126,11 +132,13 @@ void APlayerCharacter::trackMouse() {
 	}
 }
 
-void APlayerCharacter::pointToMouse() {											//Currently rotating the object to mouse, will change this later as rotation should be decided by movement
+
+void APlayerCharacter::pointToMouse() {											//Rotate player towards mouse
 	FVector mouseDist = {cursorLocation.X - GetActorLocation().X, cursorLocation.Y - GetActorLocation().Y, 0};
 	mouseRot = mouseDist.Rotation();
 	SetActorRotation(mouseRot.Quaternion());
 }
+
 
 bool APlayerCharacter::damage() {												//Damage returns bool to let bullets pass through on no damage taken
 	if (!invulnerable) {
@@ -146,10 +154,12 @@ bool APlayerCharacter::damage() {												//Damage returns bool to let bullet
 	return false;
 }
 
+
 void APlayerCharacter::die() {
-	UE_LOG(LogTemp, Warning, TEXT("DED!"));										//Todo: Make a die function
+	UE_LOG(LogTemp, Warning, TEXT("DED!"));										//Currently resets the map
 	UGameplayStatics::OpenLevel(GetWorld(), "TestMap");
 }
+
 
 void APlayerCharacter::roll() {
 	if (!rolling) {
@@ -161,6 +171,7 @@ void APlayerCharacter::roll() {
 		invulnerable = true;
 	}
 }
+
 
 void APlayerCharacter::rollMove(float deltaTime) {
 	if (rollingTimer >= rollTime) {												//stopp rolling
@@ -179,13 +190,15 @@ void APlayerCharacter::rollMove(float deltaTime) {
 	}
 }
 
+
 void APlayerCharacter::attack() {
 	if (ammo) {																	//Use the ranged attack if the player has ammo,
 		APlayerCharacter::shoot();
-	} else {																	//Use a mele attack (not yet made)
+	} else {																	//Use a mele attack
 		APlayerCharacter::hit();
 	}
 }
+
 
 void APlayerCharacter::shoot() {
 	UE_LOG(LogTemp, Warning, TEXT("Boff!"));
@@ -204,12 +217,14 @@ void APlayerCharacter::shoot() {
 	}
 }
 
+
 void APlayerCharacter::hit() {													//Function for starting mele attack
 	if (AttackBox) {
 		AttackBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		attacking = true;
 	}
 }
+
 
 void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActor *OtherActor,
 	UPrimitiveComponent *OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
@@ -221,6 +236,7 @@ void APlayerCharacter::hitDetect(UPrimitiveComponent* OverlappedComponent, AActo
 		APlayerCharacter::endHit();
 	}
 }
+
 
 void APlayerCharacter::endHit() {												//Finish the mele attack
 	if (AttackBox) {
