@@ -32,24 +32,24 @@ public:
 
 	virtual void endAttack() override;
 
-	FVector direction = { 0, 0, 0 };
+	FVector direction = { 0, 0, 0 };				//Firing direction
 
-	FVector offset = { 0, 0, 0 };
+	FVector offset = { 0, 0, 0 };					//Bullet offset, dependent on direction, shooting timer, and projectile speed.
 
-	float shootingTimer = 0;
+	float shootingTimer = 0;						//Timer variable to controll firerate
 
 	bool ready = false;
 
 	ADoomFurnace * boss;
 
-	float wave = 0;
+	float wave = 0;									//Variable to controll firing direction
 
-	bool waveDir = false;
+	bool waveDir = false;							//Direction of the rotation of the firing direction
 
-	float age = 0;
+	float age = 0;									//Self destruct timer
 	
 	UPROPERTY(EditAnywhere)
-		float fireRate = 1;
+		float fireRate = 1;							//shots per second
 
 	UPROPERTY(EditAnywhere)
 		float projectileSpeed = 300;
@@ -58,13 +58,13 @@ public:
 		TSubclassOf<class ABullet> BulletBlueprint;
 	
 	UPROPERTY(EditAnywhere)
-		float waveSpeed = 1;
+		float waveSpeed = 1;						//How far the direction should rotate per shot
 
 	UPROPERTY(EditAnywhere)
-		float waveOrigin = 0;
+		float waveOrigin = 0;						//Initial fire direction and middle of the roating cycle
 
 	UPROPERTY(EditAnywhere)
-		float waveWidth = 45;
+		float waveWidth = 45;						//How far it should rotate before changing direction
 
 	UPROPERTY(EditAnywhere)
 		float lifeTime = 1;

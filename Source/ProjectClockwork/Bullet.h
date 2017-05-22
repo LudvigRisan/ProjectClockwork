@@ -26,8 +26,6 @@ public:
 
 	FVector movement = { 0, 0, 0 };
 
-	bool launched = false;
-
 	UShapeComponent* CollisionBox = nullptr;
 	
 	float killtimer = 0;

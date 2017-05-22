@@ -6,7 +6,7 @@
 #include "BossHealthLink.generated.h"
 
 UCLASS()
-class PROJECTCLOCKWORK_API ABossHealthLink : public APawn
+class PROJECTCLOCKWORK_API ABossHealthLink : public APawn			//Object used to store the health in a format that lets the UI and other similar parts access it
 {
 	GENERATED_BODY()
 

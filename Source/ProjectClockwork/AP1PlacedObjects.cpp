@@ -33,9 +33,9 @@ void AAP1PlacedObjects::Tick(float DeltaTime) {
 }
 
 void AAP1PlacedObjects::beginAttack() {
-	UWorld* world = GetWorld();									//Spawn one turret for each position and store a reference to each
-	if (world) {
-		for (int i = 0; i < groups.Num(); i++) {
+	UWorld* world = GetWorld();									//Spawn one of the specified object type at every specified location
+	if (world) {												//for every instance of the Object group struct and add them to the array of
+		for (int i = 0; i < groups.Num(); i++) {				//pointers
 				for (int32 j = 0; j < groups[i].locations.Num(); j++) {
 				AActor * turret = world->SpawnActor<AActor>(groups[i].blueprint, groups[i].locations[j], GetActorRotation());
 				turrets.Add(turret);
@@ -58,7 +58,7 @@ void AAP1PlacedObjects::endAttack() {							//Delete all spawned turrets
 		}
 	}
 
-	TArray<AActor*> getBoss;
+	TArray<AActor*> getBoss;									//Tell the boss to launch its next attack
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADoomFurnace::StaticClass(), getBoss);
 	boss = Cast<class ADoomFurnace>(getBoss[0]);
 	boss->chooseAttack();

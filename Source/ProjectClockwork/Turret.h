@@ -30,19 +30,27 @@ public:
 
 	FVector direction = { 0, 0, 0 };
 
-	float shootingTimer = 0;
+	float shootingTimer = 0;										//Timer used for firerate
+
+	bool ready = false;
 
 	void aim();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere)											//What to aim for
 		AActor* target;
 
 	UPROPERTY(EditAnywhere)
 		float fireRate = 1;
 
 	UPROPERTY(EditAnywhere)
-		float projectileSpeed = 300;
+		float ActivationSpeed = 1;
 
 	UPROPERTY(EditAnywhere)
+		float targetZ = 150;
+
+	UPROPERTY(EditAnywhere)
+		float projectileSpeed = 300;
+
+	UPROPERTY(EditAnywhere)											//Where the bullets are spawned in relation to the turret
 		FVector bulletOffset;
 };
