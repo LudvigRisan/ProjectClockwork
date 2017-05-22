@@ -44,8 +44,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool rolling = false;
 
-
-	bool damaged = false;													//Invulnerability on taking damage
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool damaged = false;												//Invulnerability on taking damage
 
 	UPROPERTY(BlueprintReadWrite)											//Rotataion towards the mouse
 		FRotator mouseRot;
