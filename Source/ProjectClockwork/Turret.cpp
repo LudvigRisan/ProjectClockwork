@@ -28,14 +28,23 @@ void ATurret::BeginPlay()
 void ATurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (ready) {
+		ATurret::aim();
 
-	ATurret::aim();
+		shootingTimer += DeltaTime;
 
-	shootingTimer += DeltaTime;
-
-	if (shootingTimer > 1 / fireRate) {
-		shootingTimer = 0;
-		shoot(direction);
+		if (shootingTimer > 1 / fireRate) {
+			shootingTimer = 0;
+			shoot(direction);
+		}
+	} else {
+		SetActorLocation(GetActorLocation() + FVector{ 0, 0, ActivationSpeed * DeltaTime});
+		if (GetActorLocation().Z >= targetZ) {
+			FVector zSetter = GetActorLocation();
+			zSetter.Z = targetZ;
+			SetActorLocation(zSetter);
+			ready = true;
+		}
 	}
 
 }
