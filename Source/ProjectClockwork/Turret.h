@@ -32,6 +32,8 @@ public:
 
 	float shootingTimer = 0;										//Timer used for firerate
 
+	bool ready = false;
+
 	void aim();
 
 	UPROPERTY(EditAnywhere)											//What to aim for
@@ -39,6 +41,12 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float fireRate = 1;
+
+	UPROPERTY(EditAnywhere)
+		float ActivationSpeed = 1;
+
+	UPROPERTY(EditAnywhere)
+		float targetZ = 150;
 
 	UPROPERTY(EditAnywhere)
 		float projectileSpeed = 300;
