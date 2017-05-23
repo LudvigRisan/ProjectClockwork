@@ -31,15 +31,16 @@ public:
 	FVector direction = { 0, 0, 0 };
 
 	float shootingTimer = 0;										//Timer used for firerate
-
-	bool ready = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool ready = false;
 
 	void aim();
 
 	UPROPERTY(EditAnywhere)											//What to aim for
 		AActor* target;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float fireRate = 1;
 
 	UPROPERTY(EditAnywhere)
