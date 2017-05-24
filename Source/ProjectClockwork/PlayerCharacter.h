@@ -33,10 +33,14 @@ public:
 	float rollingTimer = 0;													//Timer used to controll rolling
 	float InvulTimer = 0;													//Timer used for invulnerability
 	float meleTimer = 0;													//Timer for mele attack
+	float deathTimer = 0;
 
 	UShapeComponent* AttackBox = nullptr;									//Hitbox used for mele attack
 
 	bool invulnerable = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool dying = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool attacking = false;
@@ -67,6 +71,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Life")								//How long the player is invulnerable upon taking damage
 		float damageInvulTime = 1;
+
+	UPROPERTY(EditAnywhere)
+		float deathDelay = 1;
 
 	UPROPERTY(EditAnywhere)													//How long the mele attacks last for
 		float meleTime = 1;
