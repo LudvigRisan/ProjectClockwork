@@ -52,39 +52,45 @@ void APlayerCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	if (rolling) {
-		APlayerCharacter::rollMove(DeltaTime);
+	if (!dying) {
+		if (rolling) {
+			APlayerCharacter::rollMove(DeltaTime);
+		} else {
+			APlayerCharacter::move(DeltaTime);
+			APlayerCharacter::trackMouse();
+		}
+
+		if (damaged) {																//invulnerable on taking damage
+			InvulTimer += DeltaTime;
+			if (InvulTimer >= damageInvulTime) {
+				damaged = false;
+				invulnerable = false;
+				InvulTimer = 0;
+			}
+		}
+
+		if (attacking) {
+			meleTimer += DeltaTime;
+			if (meleTimer >= meleTime) {
+				APlayerCharacter::endHit();
+				meleTimer = 0;
+			}
+		}
+
+		if (GetActorLocation().Z <= 0) {											//Respawn on fall of stage, will add a uproperty variable for
+			SetActorLocation(originLocation);										//fall of limit
+			APlayerCharacter::damage();
+		}
+
+
+
+		APlayerCharacter::pointToMouse();
 	} else {
-		APlayerCharacter::move(DeltaTime);
-		APlayerCharacter::trackMouse();
-	}
-
-	if (damaged) {																//invulnerable on taking damage
-		InvulTimer += DeltaTime;
-		if (InvulTimer >= damageInvulTime) {
-			damaged = false;
-			invulnerable = false;
-			InvulTimer = 0;
+		deathTimer += DeltaTime;
+		if (deathTimer >= deathDelay) {
+			UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()));
 		}
 	}
-
-	if (attacking) {
-		meleTimer += DeltaTime;
-		if (meleTimer >= meleTime) {
-			APlayerCharacter::endHit();
-			meleTimer = 0;
-		}
-	}
-
-	if (GetActorLocation().Z <= 0) {											//Respawn on fall of stage, will add a uproperty variable for
-		SetActorLocation(originLocation);										//fall of limit
-		APlayerCharacter::damage();
-	}
-
-	
-
-	APlayerCharacter::pointToMouse();
-
 }
 
 
@@ -157,7 +163,7 @@ bool APlayerCharacter::damage() {												//Damage returns bool to let bullet
 
 void APlayerCharacter::die() {
 	UE_LOG(LogTemp, Warning, TEXT("DED!"));										//Currently resets the map
-	UGameplayStatics::OpenLevel(GetWorld(), "TestMap");
+	dying = true;
 }
 
 
