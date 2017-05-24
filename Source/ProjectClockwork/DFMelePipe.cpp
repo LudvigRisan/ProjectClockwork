@@ -37,6 +37,10 @@ void ADFMelePipe::Tick(float DeltaTime)
 void ADFMelePipe::hit() {
 	if (boss) {												//Damage the boss by an ammount multiplied by the bosses remaining health (0 to 1)
 		boss->damage(damageAmount * health->bossHealth);
+		UWorld* world = GetWorld();
+		if (world) {
+			world->SpawnActor<AActor>(broken, GetActorLocation(), GetActorRotation());
+		}
 		Destroy();
 	}
 }
