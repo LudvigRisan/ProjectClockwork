@@ -34,4 +34,6 @@ public:
 	UPROPERTY(EditAnywhere)
 		float damageAmount;
 	
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AActor> broken;
 };
